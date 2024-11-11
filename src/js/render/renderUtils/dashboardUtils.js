@@ -1,5 +1,7 @@
-import { resizeWindow } from "./index.js";
-
+/**
+ * Open CPU Dashboard
+ * Click event callback of CPU section on monitor summary view
+ */
 const openCPUDashboard = async () => {
     const displayCPUDashboard = async (dashboard) => {
         const div = document.createElement("div");
@@ -17,10 +19,17 @@ const openCPUDashboard = async () => {
 
     openDashboard(displayCPUDashboard, "monitor_dashboard_cpu");
 };
+
+/**
+ * Open RAM Dashboard
+ * Click event callback of RAM section on monitor summary view
+ */
 const openRAMDashboard = async () => {
     const displayRAMDashboard = async (dashboard) => {
-
-        console.log('window.electronStore.monitorInfo:',window.electronStore.get('monitorInfo'))
+        console.log(
+            "window.electronStore.monitorInfo:",
+            window.electronStore.get("monitorInfo")
+        );
         // insert HTML
         const ramDashboardHtmlSnippet =
             await window.electronApis.getRAMDashboardHtml();
@@ -69,7 +78,8 @@ let interval;
 
 /**
  * Open dashboard
- * @param {Function} displayContents
+ * @param {Function} displayContents Render function that renders the dashboard contents
+ * @param {String} dashboardId  The id of the dashboard element to be opened, used to close other dashboard that is displaying
  * @returns
  */
 export const openDashboard = async (displayContents, currentDashboardId) => {
@@ -103,12 +113,12 @@ export const closeDashboard = () => {
  * @param {String} currentDashboardId
  */
 const closeOtherDashoard = (currentDashboardId) => {
-    const openedDashboardId = document.querySelector("#monitor_dashboard").firstElementChild?.id;
+    const openedDashboardId =
+        document.querySelector("#monitor_dashboard").firstElementChild?.id;
     if (openedDashboardId && openedDashboardId !== currentDashboardId) {
         closeDashboard();
     }
 };
-
 
 /**
  * Enable events invokers

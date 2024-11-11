@@ -31,6 +31,10 @@ const {
 
 const { getRAMDashboardHtml } = require("./dashboardMornitorUtils");
 
+/**
+ * Get computer static info
+ * @returns {Object} staticInfo
+ */
 const getStaticInfo = async () => {
     console.info("[INFO] Is getting static info...");
     const combinedCommands = combineCommands([
@@ -53,6 +57,12 @@ const getStaticInfo = async () => {
     };
 };
 
+/**
+ * Get computer dynamic info
+ * @param {IpcMainInvokeEvent} e
+ * @param {Object} param staticInfo
+ * @returns {Object} dynamicInfo
+ */
 const getDynamicInfo = async (
     e,
     { CPUModel, CPUMaxClockSpeed, networkName, totalMemory }
@@ -128,9 +138,21 @@ const getDynamicInfo = async (
     };
 };
 
+/**
+ * Get HTML snippet by name
+ * @param {*} e
+ * @param {string} snippetName
+ * @returns {string} HTML string
+ */
 const getHTMLSnippets = async (e, snippetName) =>
     require(`../html_snippets`)[snippetName];
 
+/**
+ * Get HTML snippet name by snippet element ID
+ * @param {*} e
+ * @param {string} snippetId snippet element ID
+ * @returns {string} HTML name
+ */
 const getHTMLSnippetsNameById = async (e, snippetId) => {
     const snippets = require("../html_snippets");
     return Object.keys(snippets).find((key) =>
@@ -139,7 +161,7 @@ const getHTMLSnippetsNameById = async (e, snippetId) => {
 };
 
 /**
- *
+ * Resize the window
  * @param {*} e
  * @param {number} width
  * @param {number} height
@@ -151,17 +173,34 @@ const resizeWindow = (e, width, height) => {
     return [width, height];
 };
 
+/**
+ * Invoke electron api to enable mouse click through
+ * @param {*} e
+ * @param {boolean} ignore isIgoreMouseEvents
+ */
 const setIgnoreMouseEvents = (e, ignore) => {
     const browserWindow = BrowserWindow.fromWebContents(e.sender);
     browserWindow.setIgnoreMouseEvents(ignore, { forward: true });
 };
 
+/**
+ * Move window
+ * @param {*} e
+ * @param {number} x The distance of horizontal movement
+ * @param {number} y The distance of vertical movement
+ */
 const moveWindow = (e, x, y) => {
     const browserWindow = BrowserWindow.fromWebContents(e.sender);
     const [originalX, originalY] = browserWindow.getPosition();
     browserWindow.setPosition(originalX + x, originalY + y);
 };
 
+/**
+ * Kill task by image name
+ * @param {*} e
+ * @param {string} imageName
+ * @returns
+ */
 const killTaskByName = (e, imageName) =>
     executeCommand(`taskkill /IM ${imageName} /F`, (stdout, err) => {
         if (err) {
@@ -180,5 +219,5 @@ module.exports = {
     getRAMDashboardHtml,
     moveWindow,
     killTaskByName,
-    setIgnoreMouseEvents
+    setIgnoreMouseEvents,
 };

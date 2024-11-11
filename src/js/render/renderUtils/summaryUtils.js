@@ -1,15 +1,15 @@
 import { insertHTMLSnippets, getDynamicInfo, getValue } from "./index.js";
 
 /**
- *
+ * Fill data into monitor summary
  * @param {Object} summaryItemRecord
  * @param {Object} staticInfo
  */
 export const fillMonitorSummary = async (summaryItemRecord, staticInfo) => {
     const dynamicInfo = await getDynamicInfo(staticInfo);
-    
-    window.electronStore.set('monitorInfo',dynamicInfo);
-    
+
+    window.electronStore.set("monitorInfo", dynamicInfo);
+
     const ids = Object.keys(summaryItemRecord);
     for (let id of ids) {
         const path = document.getElementById(id).dataset.path;
@@ -22,7 +22,7 @@ export const fillMonitorSummary = async (summaryItemRecord, staticInfo) => {
 };
 
 /**
- *
+ * Init monitor summary
  * @param {Object} summaryItemRecord
  */
 export const initMonitorSummary = async (summaryItemRecord) => {

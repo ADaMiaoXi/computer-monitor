@@ -1,9 +1,19 @@
+/**
+ * Get computer static info
+ * @returns computer static info
+ */
 export const getStaticInfo = () => window.electronApis.getStaticInfo();
-export const getDynamicInfo = (initializedInfo) =>
-    window.electronApis.getDynamicInfo(initializedInfo);
 
 /**
- *
+ * Get computer dynamic info
+ * @param {Object} staticInfo
+ * @returns computer dynamic info
+ */
+export const getDynamicInfo = (staticInfo) =>
+    window.electronApis.getDynamicInfo(staticInfo);
+
+/**
+ * Retrieve value from object by path
  * @param {Object} data
  * @param {string} path
  */
@@ -13,7 +23,7 @@ export const getValue = (data, path) =>
     }, data);
 
 /**
- *
+ * Insert HTML snippet by snippetName into the DOM that matches the selector
  * @param {string} selector
  * @param {string} snippetName
  */
@@ -23,6 +33,13 @@ export const insertHTMLSnippets = async (selector, snippetName) => {
     document.querySelector(selector).appendChild(div.firstElementChild);
 };
 
+/**
+ * Resize window to the specified width and height
+ * If no width and height is provided, the window will be resized according to the current content
+ * @param {number} paramWidth
+ * @param {number} paramHeight
+ * @returns {Array<number>} [width, height]
+ */
 export const resizeWindow = async (paramWidth, paramHeight) => {
     const summaryEelement = document.querySelector("#monitor_summary");
     let width = 0;
@@ -41,6 +58,9 @@ export const resizeWindow = async (paramWidth, paramHeight) => {
     );
 };
 
+/**
+ * Enable click through for the empty space on window
+ */
 export const enableSpaceClickThrough = () => {
     document
         .querySelector("#empty_space")
