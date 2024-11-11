@@ -1,0 +1,47 @@
+.monitor_summary {
+    display: flex;
+    height: 25px;
+    background: rgba(8, 8, 8, 0.8);
+}
+
+.monitor_summary_section {
+    display: flex;
+    flex-grow: 0;
+}
+
+.monitor_summary .monitor_summary_item {
+    display: flex;
+    flex-grow: 0;
+}
+
+.monitor_summary_data_label {
+    margin-right: 0.25rem;
+    font-size: 0.75rem;
+    line-height: 25px;
+    overflow: auto;
+    user-select: none;
+}
+
+.monitor_summary_data_value {
+    margin-right: 0.25rem;
+    font-size: 0.75rem;
+    line-height: 25px;
+    overflow: auto;
+    user-select: none;
+}
+
+.monitor_summary_network_item .monitor_summary_data_value {
+    width: 75px;
+}
+
+.monitor_summary_gpuusage_item .usage {
+    width: 32px;
+}
+
+.monitor_summary_cpuusage_item .usage {
+    width: 50px;
+}
+
+.monitor_summary_ramusage_item .usage {
+    width: 50px;
+}

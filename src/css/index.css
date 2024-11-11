@@ -1,0 +1,35 @@
+@import "./monitorSummary.css";
+@import "./monitorDashboard.css";
+
+html,
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    padding: 0;
+    margin: 0;
+    color: #eee;
+    overflow: hidden;
+    height: 100%;
+}
+
+#empty_space{
+    flex-grow: 1;
+}
+
+.monitor_container {
+    display: flex;
+    flex-direction: column;
+}
+
+.drag_handle {
+    width: 10px;
+    background-color: red;
+}
+.dragable {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-app-region: drag;
+    cursor: pointer;
+}
