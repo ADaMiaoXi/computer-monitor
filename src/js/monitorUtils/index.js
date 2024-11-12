@@ -1,4 +1,4 @@
-const { BrowserWindow } = require("electron");
+const { BrowserWindow, app } = require("electron");
 const {
     combineCommands,
     executePowershellCommand,
@@ -29,7 +29,7 @@ const {
     getMemoryUsage,
 } = require("./memoryUtils");
 
-const { getRAMDashboardHtml } = require("./dashboardMornitorUtils");
+const { getRAMDashboardHtml,getIconOfProcesses } = require("./dashboardMornitorUtils");
 
 /**
  * Get computer static info
@@ -220,4 +220,5 @@ module.exports = {
     moveWindow,
     killTaskByName,
     setIgnoreMouseEvents,
+    getIconOfProcesses
 };

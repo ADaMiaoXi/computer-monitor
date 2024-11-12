@@ -9,7 +9,8 @@ const {
     moveWindow,
     getRAMDashboardHtml,
     killTaskByName,
-    setIgnoreMouseEvents
+    setIgnoreMouseEvents,
+    getIconOfProcesses,
 } = require("./monitorUtils");
 
 const createWindow = () => {
@@ -24,7 +25,7 @@ const createWindow = () => {
         alwaysOnTop: true,
         webPreferences: {
             preload: path.join(__dirname, "preload.js"),
-        },
+        }
     });
 
     win.webContents.toggleDevTools();
@@ -42,6 +43,7 @@ const prepareApis = () => {
     ipcMain.handle("moveWindow", moveWindow);
     ipcMain.handle("killTaskByName", killTaskByName);
     ipcMain.handle("setIgnoreMouseEvents", setIgnoreMouseEvents);
+    ipcMain.handle("getIconOfProcesses", getIconOfProcesses);
 };
 
 app.whenReady().then(() => {

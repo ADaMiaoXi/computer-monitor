@@ -6,6 +6,7 @@ import {
     enableSummaryEvents,
     resizeWindow,
     enableSpaceClickThrough,
+    getIconOfProcesses,
 } from "./renderUtils/index.js";
 
 /**
@@ -27,10 +28,13 @@ async function render() {
             resolve(await resizeWindow());
         }, 50);
     });
+
     // Attach events for monitor summary view.
     enableSummaryEvents();
     // Enable click through for empty space.
     enableSpaceClickThrough();
+
+    getIconOfProcesses();
 
     // Fetch data for monitor summary. And store data in `window.electronStore.monitorInfo`
     // Refresh data every 1200ms.

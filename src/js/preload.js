@@ -1,4 +1,4 @@
-const { contextBridge, ipcRenderer } = require("electron");
+const { contextBridge, ipcRenderer, app } = require("electron");
 
 contextBridge.exposeInMainWorld("electronApis", {
     getDynamicInfo: (initializedInfo) =>
@@ -16,4 +16,6 @@ contextBridge.exposeInMainWorld("electronApis", {
         ipcRenderer.invoke("killTaskByName", imageName),
     setIgnoreMouseEvents: (ignore) =>
         ipcRenderer.invoke("setIgnoreMouseEvents", ignore),
+    getIconOfProcesses: () =>
+        ipcRenderer.invoke("getIconOfProcesses"),
 });

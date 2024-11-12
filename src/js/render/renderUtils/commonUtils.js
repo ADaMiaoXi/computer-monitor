@@ -74,3 +74,6 @@ export const enableSpaceClickThrough = () => {
             window.electronApis.setIgnoreMouseEvents(false);
         });
 };
+
+export const getIconOfProcesses = () =>
+    window.electronApis.getIconOfProcesses();

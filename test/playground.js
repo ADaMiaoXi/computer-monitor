@@ -1,34 +1,28 @@
-const { executePowershellCommand } = require("../src/js/commands");
-
+const { app } = require("electron");
 const {
-  CPU_USEAGE_PERCENTAGE_COMMAND,
-  NETWORK_SEND_AND_RECEIVED_COMMAND,
-  checkAndRetrieveCommonCommandType,
-  retrieveParams,
-  combineCommandsWithCommonType,
+    executePowershellCommand,
+    transformStdoutStringToLines,
 } = require("../src/js/commands");
 
-const res = checkAndRetrieveCommonCommandType([
-  CPU_USEAGE_PERCENTAGE_COMMAND,
-  NETWORK_SEND_AND_RECEIVED_COMMAND,
-]);
+const run = async () => {
+    const stdout = await executePowershellCommand(
+        "wmic process get name,executablepath",
+        (stdout) => stdout
+    );
+    const lines = transformStdoutStringToLines(stdout);
+    const porcessedLines = lines.map((line) => line.split(" ").filter(Boolean));
+    const resultObj = {};
+    porcessedLines.forEach((line) => {
+        if (line[1] && line[1].endsWith(".exe")) {
+            resultObj[line[1]] = line[0];
+        }
+    });
 
-console.log(res);
+    //console.log(resultObj);
+    console.log(app)
+    app.getFileIcon(resultObj["douyin.exe"]).then(data => console.log(data.toDataURL()));
+};
 
-const params = retrieveParams([
-  CPU_USEAGE_PERCENTAGE_COMMAND,
-  NETWORK_SEND_AND_RECEIVED_COMMAND,
-]);
+run();
 
-console.log(params);
-
-const command = combineCommandsWithCommonType([
-  CPU_USEAGE_PERCENTAGE_COMMAND,
-  NETWORK_SEND_AND_RECEIVED_COMMAND,
-]);
-
-console.log(command);
-
-executePowershellCommand(command, (stdout) => stdout).then((data) => {
-  console.log(data);
-});
+//https://stackoverflow.com/questions/61788124/get-desktop-file-icons-using-nodejs

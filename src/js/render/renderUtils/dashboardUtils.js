@@ -1,3 +1,4 @@
+import {getIconOfProcesses} from './commonUtils.js'
 /**
  * Open CPU Dashboard
  * Click event callback of CPU section on monitor summary view
@@ -33,32 +34,46 @@ const openRAMDashboard = async () => {
         // insert HTML
         const ramDashboardHtmlSnippet =
             await window.electronApis.getRAMDashboardHtml();
+
+        getIconOfProcesses();
+
         const div = document.createElement("div");
-
         div.innerHTML = ramDashboardHtmlSnippet;
-
-        // Add events
         const taskRamList = div.firstElementChild.lastElementChild.children;
 
         for (let i = 0; i < taskRamList.length; i++) {
             const taskRamItem = taskRamList[i];
+            // Add event
             taskRamItem.lastElementChild.addEventListener(
                 "click",
                 async (e) => {
                     const imageName =
-                        e.target.parentElement.parentElement.firstElementChild
+                        e.target.parentElement.parentElement.children[1]
                             .innerText;
                     const res = await window.electronApis.killTaskByName(
                         imageName
                     );
-
-                    console.log(res);
 
                     setTimeout(() => {
                         displayRAMDashboard(dashboard);
                     }, 200);
                 }
             );
+
+            // Add logo image
+            const img = document.createElement("img");
+            img.setAttribute(
+                "src",
+                `../../static/pic/${taskRamItem.children[0].innerText}.png`
+            );
+            img.addEventListener(
+                "error",
+                e => {
+                    e.target.setAttribute("src", "../../static/pic/default.png");
+                }
+            );
+            img.classList.add("monitor_dashboard_ram_list_item_logo")
+            taskRamItem.insertBefore(img, taskRamItem.firstElementChild);
         }
 
         if (dashboard.firstElementChild) {
@@ -91,11 +106,11 @@ export const openDashboard = async (displayContents, currentDashboardId) => {
         return;
     }
 
+    await displayContents(dashboard);
+    
     interval = setInterval(async () => {
         displayContents(dashboard);
-    }, 2000);
-
-    await displayContents(dashboard);
+    }, 2500);
 };
 
 /**
