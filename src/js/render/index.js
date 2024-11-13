@@ -1,4 +1,7 @@
-import config from "./configuration/index.js";
+import {
+    summaryItemRecord,
+    launchConfiguration,
+} from "./configuration/index.js";
 import {
     getStaticInfo,
     initMonitorSummary,
@@ -8,11 +11,6 @@ import {
     enableSpaceClickThrough,
     getIconOfProcesses,
 } from "./renderUtils/index.js";
-
-/**
- * Retrieve summary item record.
- */
-const { summaryItemRecord } = config;
 
 /**
  * Render program window.
@@ -39,9 +37,20 @@ async function render() {
     // Fetch data for monitor summary. And store data in `window.electronStore.monitorInfo`
     // Refresh data every 1200ms.
     const staticInfo = await getStaticInfo();
-    setInterval(async () => {
-        await fillMonitorSummary(summaryItemRecord, staticInfo);
-    }, 1200);
+
+    const {
+        summary: {
+            monitorSummaryRefreshInterval,
+            isMonitorSummaryKeepRefreshing,
+        },
+    } = launchConfiguration;
+
+    await fillMonitorSummary(summaryItemRecord, staticInfo);
+    if (isMonitorSummaryKeepRefreshing) {
+        setInterval(async () => {
+            await fillMonitorSummary(summaryItemRecord, staticInfo);
+        }, monitorSummaryRefreshInterval);
+    }
 }
 
 // Invoke render function.

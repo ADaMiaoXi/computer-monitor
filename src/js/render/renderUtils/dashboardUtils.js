@@ -1,4 +1,5 @@
-import {getIconOfProcesses} from './commonUtils.js'
+import { launchConfiguration } from "../configuration/config.js";
+import { getIconOfProcesses } from "./commonUtils.js";
 /**
  * Open CPU Dashboard
  * Click event callback of CPU section on monitor summary view
@@ -35,8 +36,6 @@ const openRAMDashboard = async () => {
         const ramDashboardHtmlSnippet =
             await window.electronApis.getRAMDashboardHtml();
 
-        getIconOfProcesses();
-
         const div = document.createElement("div");
         div.innerHTML = ramDashboardHtmlSnippet;
         const taskRamList = div.firstElementChild.lastElementChild.children;
@@ -62,17 +61,15 @@ const openRAMDashboard = async () => {
 
             // Add logo image
             const img = document.createElement("img");
+            //const regex = /^douyin/;
             img.setAttribute(
                 "src",
                 `../../static/pic/${taskRamItem.children[0].innerText}.png`
             );
-            img.addEventListener(
-                "error",
-                e => {
-                    e.target.setAttribute("src", "../../static/pic/default.png");
-                }
-            );
-            img.classList.add("monitor_dashboard_ram_list_item_logo")
+            img.addEventListener("error", (e) => {
+                e.target.setAttribute("src", "../../static/pic/default.png");
+            });
+            img.classList.add("monitor_dashboard_ram_list_item_logo");
             taskRamItem.insertBefore(img, taskRamItem.firstElementChild);
         }
 
@@ -85,6 +82,8 @@ const openRAMDashboard = async () => {
             dashboard.appendChild(div.firstElementChild);
         }
     };
+
+    getIconOfProcesses();
     openDashboard(displayRAMDashboard, "monitor_dashboard_ram");
 };
 
@@ -106,11 +105,19 @@ export const openDashboard = async (displayContents, currentDashboardId) => {
         return;
     }
 
+    const {
+        ramDashboard: {
+            isDashboardRamlistKeepRefreshing,
+            dashboardRamlistRefreshInterval,
+        },
+    } = launchConfiguration;
+
     await displayContents(dashboard);
-    
-    interval = setInterval(async () => {
-        displayContents(dashboard);
-    }, 2500);
+    if (isDashboardRamlistKeepRefreshing) {
+        interval = setInterval(async () => {
+            displayContents(dashboard);
+        }, dashboardRamlistRefreshInterval);
+    }
 };
 
 /**

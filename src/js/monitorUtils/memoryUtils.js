@@ -41,7 +41,10 @@ function getProcessedRAMTasklist(lines) {
     const map = new Map();
     processedLines.forEach((lineArr) => {
         const key = lineArr[0];
-        const value = Number(lineArr[3].replace(",", "").replace(" K", ""));
+        const value = Number(
+            lineArr[lineArr.length - 1].replaceAll(",", "").replace(" K", "")
+        );
+
         if (map.has(key)) {
             map.set(key, map.get(key) + value);
         } else {
@@ -57,7 +60,7 @@ function getProcessedRAMTasklist(lines) {
         resList[index][0] = key;
         resList[index][1] = `${(map.get(key) / 1024).toFixed(2)} MB`;
     });
-    return resList.slice(0,15);
+    return resList.slice(0, 15);
 }
 
 module.exports = {

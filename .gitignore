@@ -1,4 +1,5 @@
 node_modules/
 dist/
 .vscode
-static/pic
+static/pic/*
+!/static/pic/default.png

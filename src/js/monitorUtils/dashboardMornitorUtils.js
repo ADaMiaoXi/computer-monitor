@@ -34,7 +34,6 @@ const getIconOfProcesses = async () => {
     }
 
     if (isGettingIconOfProcesses) return;
-    console.log("------isGettingIconOfProcesses-----");
     isGettingIconOfProcesses = true;
     const stdout = await executePowershellCommand(
         "wmic process get name,executablepath",
