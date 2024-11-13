@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require("electron");
+const { app, BrowserWindow, Tray,Menu, ipcMain } = require("electron");
 const path = require("node:path");
 const {
     getStaticInfo,
@@ -25,12 +25,31 @@ const createWindow = () => {
         alwaysOnTop: true,
         webPreferences: {
             preload: path.join(__dirname, "preload.js"),
-        }
+        },
     });
 
     win.webContents.toggleDevTools();
 
     win.loadFile(path.join(__dirname, "../render/html/index.html"));
+
+    // Initialize tray menu
+    const contextMenu = Menu.buildFromTemplate([
+        {
+            label: "Exit",
+            click: () => {
+                app.quit();
+            },
+        },
+    ]);
+
+    let iconPath = path.join(__dirname, "../../static/icons/logo.ico");
+    let appTray = new Tray(iconPath);
+    appTray.setToolTip("Monitor");
+    appTray.setContextMenu(contextMenu);
+
+    appTray.on("click", () => {
+        win.isVisible(0) ? win.hide() : win.show();
+    });
 };
 
 const prepareApis = () => {
