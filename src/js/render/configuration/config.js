@@ -8,7 +8,7 @@ export const mapOfElememtIdAndSnippetName = {
 
 export const launchConfiguration = {
   summary: {
-    isMonitorSummaryKeepRefreshing: false,
+    isMonitorSummaryKeepRefreshing: true,
     monitorSummaryRefreshInterval: 1200,
   },
   ramDashboard: {
