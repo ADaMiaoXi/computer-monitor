@@ -33,8 +33,9 @@ const openRAMDashboard = async () => {
             window.electronStore.get("monitorInfo")
         );
         // insert HTML
-        const ramDashboardHtmlSnippet =
-            await window.electronApis.getRAMDashboardHtml();
+        const ramDashboardHtmlSnippet = await window.electronApi.invoke(
+            "getRAMDashboardHtml"
+        );
 
         const div = document.createElement("div");
         div.innerHTML = ramDashboardHtmlSnippet;
@@ -49,7 +50,8 @@ const openRAMDashboard = async () => {
                     const imageName =
                         e.target.parentElement.parentElement.children[1]
                             .innerText;
-                    const res = await window.electronApis.killTaskByName(
+                    const res = await window.electronApi.invoke(
+                        "killTaskByName",
                         imageName
                     );
 
@@ -67,7 +69,10 @@ const openRAMDashboard = async () => {
                 `../../../static/processIcons/${taskRamItem.children[0].innerText}.png`
             );
             img.addEventListener("error", (e) => {
-                e.target.setAttribute("src", "../../../static/processIcons/default.png");
+                e.target.setAttribute(
+                    "src",
+                    "../../../static/processIcons/default.png"
+                );
             });
             img.classList.add("monitor_dashboard_ram_list_item_logo");
             taskRamItem.insertBefore(img, taskRamItem.firstElementChild);
@@ -107,16 +112,16 @@ export const openDashboard = async (displayContents, currentDashboardId) => {
 
     const {
         ramDashboard: {
-            isDashboardRamlistKeepRefreshing,
-            dashboardRamlistRefreshInterval,
+            isKeepRefreshing,
+            refreshInterval,
         },
     } = launchConfiguration;
 
     await displayContents(dashboard);
-    if (isDashboardRamlistKeepRefreshing) {
+    if (isKeepRefreshing) {
         interval = setInterval(async () => {
             displayContents(dashboard);
-        }, dashboardRamlistRefreshInterval);
+        }, refreshInterval);
     }
 };
 

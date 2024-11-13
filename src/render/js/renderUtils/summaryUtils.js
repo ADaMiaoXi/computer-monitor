@@ -30,14 +30,12 @@ export const initMonitorSummary = async (summaryItemRecord) => {
     const initializedSections = [];
     for (let key of keys) {
         const div = document.createElement("div");
-        div.innerHTML = await window.electronApis.getHTMLSnippets(
-            summaryItemRecord[key]
-        );
+        div.innerHTML = await window.electronApi.invoke('getHTMLSnippets',summaryItemRecord[key])
         const parentId = div.firstElementChild.dataset.parentid;
         if (!initializedSections.includes(parentId)) {
             insertHTMLSnippets(
                 `#monitor_summary`,
-                await window.electronApis.getHTMLSnippetsNameById(parentId)
+                await window.electronApi.invoke('getHTMLSnippetsNameById', parentId)
             );
             initializedSections.push(parentId);
         }

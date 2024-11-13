@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "src/electron/main.js",
   "scripts": {
-    "open_window": "nodemon --exec electron .",
+    "launch": "nodemon --exec electron .",
     "build": "electron-builder"
   },
   "build": {

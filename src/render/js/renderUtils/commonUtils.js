@@ -2,7 +2,7 @@
  * Get computer static info
  * @returns computer static info
  */
-export const getStaticInfo = () => window.electronApis.getStaticInfo();
+export const getStaticInfo = () => window.electronApi.invoke("getStaticInfo");
 
 /**
  * Get computer dynamic info
@@ -10,7 +10,7 @@ export const getStaticInfo = () => window.electronApis.getStaticInfo();
  * @returns computer dynamic info
  */
 export const getDynamicInfo = (staticInfo) =>
-    window.electronApis.getDynamicInfo(staticInfo);
+    window.electronApi.invoke("getDynamicInfo", staticInfo);
 
 /**
  * Retrieve value from object by path
@@ -29,7 +29,10 @@ export const getValue = (data, path) =>
  */
 export const insertHTMLSnippets = async (selector, snippetName) => {
     const div = document.createElement("div");
-    div.innerHTML = await window.electronApis.getHTMLSnippets(snippetName);
+    div.innerHTML = await window.electronApi.invoke(
+        "getHTMLSnippets",
+        snippetName
+    );
     document.querySelector(selector).appendChild(div.firstElementChild);
 };
 
@@ -49,13 +52,16 @@ export const resizeWindow = async (paramWidth, paramHeight) => {
     }
 
     if (paramWidth && paramHeight) {
-        return await window.electronApis.resizeWindow(width, height);
+        return await window.electronApi.invoke("resizeWindow", {
+            width,
+            height,
+        });
     }
 
-    return await window.electronApis.resizeWindow(
+    return await window.electronApi.invoke("resizeWindow", {
         width,
-        document.querySelector("body").clientHeight
-    );
+        height: document.querySelector("body").clientHeight,
+    });
 };
 
 /**
@@ -65,15 +71,15 @@ export const enableSpaceClickThrough = () => {
     document
         .querySelector("#empty_space")
         .addEventListener("mouseenter", (e) => {
-            window.electronApis.setIgnoreMouseEvents(true);
+            window.electronApi.invoke("setIgnoreMouseEvents", true);
         });
 
     document
         .querySelector("#empty_space")
         .addEventListener("mouseleave", (e) => {
-            window.electronApis.setIgnoreMouseEvents(false);
+            window.electronApi.invoke("setIgnoreMouseEvents", false);
         });
 };
 
 export const getIconOfProcesses = () =>
-    window.electronApis.getIconOfProcesses();
+    window.electronApi.invoke("getIconOfProcesses");

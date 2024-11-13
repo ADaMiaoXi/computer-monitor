@@ -16,9 +16,9 @@ import {
  * Render program window.
  */
 async function render() {
-    // Initial electron store.
+    // Initialize electron store.
     window.electronStore = new Map();
-    // Initial monitor summary.
+    // Initialize monitor summary.
     await initMonitorSummary(summaryItemRecord);
     // Resize window size, set timeout to wait documents prepared.
     await new Promise((resolve) => {
@@ -40,16 +40,16 @@ async function render() {
 
     const {
         summary: {
-            monitorSummaryRefreshInterval,
-            isMonitorSummaryKeepRefreshing,
+            refreshInterval,
+            isKeepRefreshing,
         },
     } = launchConfiguration;
 
     await fillMonitorSummary(summaryItemRecord, staticInfo);
-    if (isMonitorSummaryKeepRefreshing) {
+    if (isKeepRefreshing) {
         setInterval(async () => {
             await fillMonitorSummary(summaryItemRecord, staticInfo);
-        }, monitorSummaryRefreshInterval);
+        }, refreshInterval);
     }
 }
 

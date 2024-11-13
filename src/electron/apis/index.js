@@ -1,4 +1,4 @@
-const { BrowserWindow, app } = require("electron");
+const { BrowserWindow } = require("electron");
 const {
     combineCommands,
     executePowershellCommand,
@@ -11,25 +11,22 @@ const {
     NETWORK_SEND_AND_RECEIVED_COMMAND,
     executeCommand,
 } = require("../commands");
+
 const {
     getCPUModel,
     getCPUMaxClockSpeed,
     getCPUUsage,
     getCPUCurrentSpeed,
-} = require("./cpuMonitorUtils");
-const {
+    getGPUInfo,
     getNetworkName,
     getNetworkDownloadSpeed,
     getNetworkuploadSpeed,
-} = require("./networkMonitorUtils");
-const { getGPUInfo } = require("./gpuMonitorUtils");
-const {
     getTotalMemory,
     getFreeMemory,
     getMemoryUsage,
-} = require("./memoryUtils");
-
-const { getRAMDashboardHtml,getIconOfProcesses } = require("./dashboardMornitorUtils");
+    getRAMDashboardHtml,
+    getIconOfProcesses,
+} = require("./utils");
 
 /**
  * Get computer static info
@@ -167,7 +164,7 @@ const getHTMLSnippetsNameById = async (e, snippetId) => {
  * @param {number} height
  * @returns {Array<number>} [width,height]
  */
-const resizeWindow = (e, width, height) => {
+const resizeWindow = (e, { width, height }) => {
     const browserWindow = BrowserWindow.fromWebContents(e.sender);
     browserWindow.setSize(width, height);
     return [width, height];
@@ -189,7 +186,7 @@ const setIgnoreMouseEvents = (e, ignore) => {
  * @param {number} x The distance of horizontal movement
  * @param {number} y The distance of vertical movement
  */
-const moveWindow = (e, x, y) => {
+const moveWindow = (e, { x, y }) => {
     const browserWindow = BrowserWindow.fromWebContents(e.sender);
     const [originalX, originalY] = browserWindow.getPosition();
     browserWindow.setPosition(originalX + x, originalY + y);
@@ -210,6 +207,7 @@ const killTaskByName = (e, imageName) =>
         return stdout;
     });
 
+// NOTE: All electron APIs should export here!
 module.exports = {
     getStaticInfo,
     getDynamicInfo,
@@ -220,5 +218,5 @@ module.exports = {
     moveWindow,
     killTaskByName,
     setIgnoreMouseEvents,
-    getIconOfProcesses
+    getIconOfProcesses,
 };

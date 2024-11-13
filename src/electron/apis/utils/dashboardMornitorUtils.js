@@ -1,13 +1,13 @@
 const path = require("node:path");
 const fs = require("node:fs");
-const { generateRAMListHtmlSnippet } = require("../html_snippets");
+const { generateRAMListHtmlSnippet } = require("../../html_snippets");
 const { app } = require("electron");
 const {
     executeCommand,
     executePowershellCommand,
     transformStdoutStringToLines,
     TASK_RAM_USAGE_COMMAND,
-} = require("../commands");
+} = require("../../commands");
 
 const { getProcessedRAMTasklist } = require("./memoryUtils");
 
@@ -49,7 +49,7 @@ const getIconOfProcesses = async () => {
         )
         .filter((lineArr) => lineArr.length === 2);
 
-    const targetFloder = "../../../static/processIcons";
+    const targetFloder = "../../../../static/processIcons";
     if (!fs.existsSync(path.join(__dirname, targetFloder))) {
         fs.mkdirSync(path.join(__dirname, targetFloder));
     }

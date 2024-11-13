@@ -8,11 +8,11 @@ export const mapOfElememtIdAndSnippetName = {
 
 export const launchConfiguration = {
   summary: {
-    isMonitorSummaryKeepRefreshing: false,
-    monitorSummaryRefreshInterval: 1200,
+    isKeepRefreshing: false,
+    refreshInterval: 1200,
   },
   ramDashboard: {
-    isDashboardRamlistKeepRefreshing: false,
-    dashboardRamlistRefreshInterval: 2500,
+    isKeepRefreshing: false,
+    refreshInterval: 2500,
   },
 };

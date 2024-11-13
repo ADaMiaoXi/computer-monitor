@@ -1,19 +1,8 @@
-const { app, BrowserWindow, Tray,Menu, ipcMain } = require("electron");
+const { app, BrowserWindow, Tray, Menu, ipcMain } = require("electron");
 const path = require("node:path");
-const {
-    getStaticInfo,
-    getDynamicInfo,
-    getHTMLSnippets,
-    getHTMLSnippetsNameById,
-    resizeWindow,
-    moveWindow,
-    getRAMDashboardHtml,
-    killTaskByName,
-    setIgnoreMouseEvents,
-    getIconOfProcesses,
-} = require("./monitorUtils");
+const apis = require("./apis");
 
-const createWindow = () => {
+const createApplication = () => {
     const win = new BrowserWindow({
         x: 100,
         y: 200,
@@ -52,20 +41,13 @@ const createWindow = () => {
     });
 };
 
-const prepareApis = () => {
-    ipcMain.handle("getDynamicInfo", getDynamicInfo);
-    ipcMain.handle("getStaticInfo", getStaticInfo);
-    ipcMain.handle("getHTMLSnippets", getHTMLSnippets);
-    ipcMain.handle("getHTMLSnippetsNameById", getHTMLSnippetsNameById);
-    ipcMain.handle("resizeWindow", resizeWindow);
-    ipcMain.handle("getRAMDashboardHtml", getRAMDashboardHtml);
-    ipcMain.handle("moveWindow", moveWindow);
-    ipcMain.handle("killTaskByName", killTaskByName);
-    ipcMain.handle("setIgnoreMouseEvents", setIgnoreMouseEvents);
-    ipcMain.handle("getIconOfProcesses", getIconOfProcesses);
+const initializeElectronApis = () => {
+    Object.keys(apis).forEach((apiName) => {
+        ipcMain.handle(apiName, apis[apiName]);
+    });
 };
 
 app.whenReady().then(() => {
-    prepareApis();
-    createWindow();
+    initializeElectronApis();
+    createApplication();
 });
