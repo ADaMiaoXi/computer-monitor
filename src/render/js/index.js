@@ -1,7 +1,7 @@
 import {
     summaryItemRecord,
     launchConfiguration,
-} from "./configuration/index.js";
+} from "../../configuration/index.js";
 import {
     getStaticInfo,
     initMonitorSummary,

@@ -19,7 +19,7 @@ const CPU_SECTION_HTML_SNIPPET = `
         <image
             height="15"
             width="15"
-            href="../../static/svg/cpu.svg"
+            href="../../../static/svg/cpu.svg"
         />
     </svg>
 </div>`;
@@ -39,7 +39,7 @@ const GPU_SECTION_HTML_SNIPPET = `
          <image
              height="15"
              width="15"
-             href="../../static/svg/gpu.svg"
+             href="../../../static/svg/gpu.svg"
          />
      </svg>
  </div>`;
@@ -59,7 +59,7 @@ const RAM_SECTION_HTML_SNIPPET = `
         <image
             height="15"
             width="15"
-            href="../../static/svg/ram.svg"
+            href="../../../static/svg/ram.svg"
         />
     </svg>
 </div>`;

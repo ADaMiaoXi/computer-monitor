@@ -1,4 +1,4 @@
-import { launchConfiguration } from "../configuration/config.js";
+import { launchConfiguration } from "../../../configuration/index.js";
 import { getIconOfProcesses } from "./commonUtils.js";
 /**
  * Open CPU Dashboard
@@ -64,10 +64,10 @@ const openRAMDashboard = async () => {
             //const regex = /^douyin/;
             img.setAttribute(
                 "src",
-                `../../static/pic/${taskRamItem.children[0].innerText}.png`
+                `../../../static/processIcons/${taskRamItem.children[0].innerText}.png`
             );
             img.addEventListener("error", (e) => {
-                e.target.setAttribute("src", "../../static/pic/default.png");
+                e.target.setAttribute("src", "../../../static/processIcons/default.png");
             });
             img.classList.add("monitor_dashboard_ram_list_item_logo");
             taskRamItem.insertBefore(img, taskRamItem.firstElementChild);

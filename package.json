@@ -1,7 +1,7 @@
 {
   "name": "computer_monitor",
   "version": "1.0.0",
-  "main": "src/js/main.js",
+  "main": "src/electron/main.js",
   "scripts": {
     "open_window": "nodemon --exec electron .",
     "build": "electron-builder"

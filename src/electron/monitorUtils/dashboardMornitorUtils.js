@@ -49,7 +49,7 @@ const getIconOfProcesses = async () => {
         )
         .filter((lineArr) => lineArr.length === 2);
 
-    const targetFloder = "../../../static/pic";
+    const targetFloder = "../../../static/processIcons";
     if (!fs.existsSync(path.join(__dirname, targetFloder))) {
         fs.mkdirSync(path.join(__dirname, targetFloder));
     }

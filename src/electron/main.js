@@ -30,7 +30,7 @@ const createWindow = () => {
 
     win.webContents.toggleDevTools();
 
-    win.loadFile(path.join(__dirname, "../html/index.html"));
+    win.loadFile(path.join(__dirname, "../render/html/index.html"));
 };
 
 const prepareApis = () => {

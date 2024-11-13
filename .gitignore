@@ -1,5 +1,5 @@
 node_modules/
 dist/
 .vscode
-static/pic/*
-!/static/pic/default.png
+static/processIcons/*
+!/static/processIcons/default.png
