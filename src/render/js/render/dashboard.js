@@ -1,5 +1,5 @@
 import { launchConfiguration } from "../../../configuration/index.js";
-import { getIconOfProcesses } from "./commonUtils.js";
+import { getIconOfProcesses } from "./common.js";
 /**
  * Open CPU Dashboard
  * Click event callback of CPU section on monitor summary view
@@ -33,13 +33,13 @@ const openRAMDashboard = async () => {
             window.electronStore.get("monitorInfo")
         );
         // insert HTML
-        const ramDashboardHtmlSnippet = await window.electronApi.invoke(
+        const ramDashboardHtmlSnippet = await window.electronAPI.invoke(
             "getRAMDashboardHtml"
         );
 
         const div = document.createElement("div");
         div.innerHTML = ramDashboardHtmlSnippet;
-        const taskRamList = div.firstElementChild.lastElementChild.children;
+        const taskRamList = div.firstElementChild.children[1].children;
 
         for (let i = 0; i < taskRamList.length; i++) {
             const taskRamItem = taskRamList[i];
@@ -50,7 +50,7 @@ const openRAMDashboard = async () => {
                     const imageName =
                         e.target.parentElement.parentElement.children[1]
                             .innerText;
-                    const res = await window.electronApi.invoke(
+                    const res = await window.electronAPI.invoke(
                         "killTaskByName",
                         imageName
                     );
@@ -86,6 +86,49 @@ const openRAMDashboard = async () => {
         } else {
             dashboard.appendChild(div.firstElementChild);
         }
+
+        // Add pie chart
+        // var chartDom = document.getElementById("monitor_dashboard_ram_pie");
+        // var myChart = echarts.init(chartDom);
+
+        // const option = {
+        //     title: {
+        //         text: "Referer of a Website",
+        //         subtext: "Fake Data",
+        //         left: "center",
+        //     },
+        //     tooltip: {
+        //         trigger: "item",
+        //     },
+        //     legend: {
+        //         orient: "vertical",
+        //         left: "left",
+        //     },
+        //     series: [
+        //         {
+        //             name: "Access From",
+        //             type: "pie",
+        //             radius: "50%",
+        //             data: [
+        //                 { value: 1048, name: "Search Engine" },
+        //                 { value: 735, name: "Direct" },
+        //                 { value: 580, name: "Email" },
+        //                 { value: 484, name: "Union Ads" },
+        //                 { value: 300, name: "Video Ads" },
+        //             ],
+        //             emphasis: {
+        //                 itemStyle: {
+        //                     shadowBlur: 10,
+        //                     shadowOffsetX: 0,
+        //                     shadowColor: "rgba(0, 0, 0, 0.5)",
+        //                 },
+        //             },
+        //         },
+        //     ],
+        // };
+        // setTimeout(() => {
+        //     option && myChart.setOption(option);
+        // }, 2000);
     };
 
     getIconOfProcesses();
@@ -111,10 +154,7 @@ export const openDashboard = async (displayContents, currentDashboardId) => {
     }
 
     const {
-        ramDashboard: {
-            isKeepRefreshing,
-            refreshInterval,
-        },
+        ramDashboard: { isKeepRefreshing, refreshInterval },
     } = launchConfiguration;
 
     await displayContents(dashboard);
@@ -131,8 +171,7 @@ export const openDashboard = async (displayContents, currentDashboardId) => {
 export const closeDashboard = () => {
     clearInterval(interval);
     const dashboard = document.querySelector("#monitor_dashboard");
-    const y = dashboard.clientHeight;
-    dashboard.firstElementChild.remove();
+    dashboard.firstElementChild?.remove();
 };
 
 /**

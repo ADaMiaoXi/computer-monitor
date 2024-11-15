@@ -1,28 +1,35 @@
-const { app, BrowserWindow, Tray, Menu, ipcMain } = require("electron");
+const { BrowserWindow, Tray, Menu, app, ipcMain, screen } = require("electron");
 const path = require("node:path");
 const apis = require("./apis");
 
 const createApplication = () => {
+    const primaryDisplay = screen.getPrimaryDisplay();
+    const { width, height } = primaryDisplay.workAreaSize;
     const win = new BrowserWindow({
-        x: 100,
-        y: 200,
+        x: Math.floor(width * 0.65),
+        y: Math.floor(height * 0.35),
         width: 0,
-        height: 400,
+        height: 600,
         frame: false,
         transparent: true,
         resizable: false,
         alwaysOnTop: true,
+        skipTaskbar: true,
         webPreferences: {
             preload: path.join(__dirname, "preload.js"),
         },
     });
 
-    win.webContents.toggleDevTools();
-
     win.loadFile(path.join(__dirname, "../render/html/index.html"));
 
     // Initialize tray menu
     const contextMenu = Menu.buildFromTemplate([
+        {
+            label: "Open DevTools",
+            click: () => {
+                win.webContents.toggleDevTools();
+            },
+        },
         {
             label: "Exit",
             click: () => {
@@ -36,8 +43,14 @@ const createApplication = () => {
     appTray.setToolTip("Monitor");
     appTray.setContextMenu(contextMenu);
 
-    appTray.on("click", () => {
-        win.isVisible(0) ? win.hide() : win.show();
+    appTray.on("double-click", () => {
+        if (win.isVisible()) {
+            win.webContents.send("stopApp");
+            win.hide();
+        } else {
+            win.webContents.send("runApp");
+            win.show();
+        }
     });
 };
 

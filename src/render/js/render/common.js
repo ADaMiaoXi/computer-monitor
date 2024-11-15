@@ -2,7 +2,7 @@
  * Get computer static info
  * @returns computer static info
  */
-export const getStaticInfo = () => window.electronApi.invoke("getStaticInfo");
+export const getStaticInfo = () => window.electronAPI.invoke("getStaticInfo");
 
 /**
  * Get computer dynamic info
@@ -10,7 +10,7 @@ export const getStaticInfo = () => window.electronApi.invoke("getStaticInfo");
  * @returns computer dynamic info
  */
 export const getDynamicInfo = (staticInfo) =>
-    window.electronApi.invoke("getDynamicInfo", staticInfo);
+    window.electronAPI.invoke("getDynamicInfo", staticInfo);
 
 /**
  * Retrieve value from object by path
@@ -29,7 +29,7 @@ export const getValue = (data, path) =>
  */
 export const insertHTMLSnippets = async (selector, snippetName) => {
     const div = document.createElement("div");
-    div.innerHTML = await window.electronApi.invoke(
+    div.innerHTML = await window.electronAPI.invoke(
         "getHTMLSnippets",
         snippetName
     );
@@ -52,13 +52,13 @@ export const resizeWindow = async (paramWidth, paramHeight) => {
     }
 
     if (paramWidth && paramHeight) {
-        return await window.electronApi.invoke("resizeWindow", {
+        return await window.electronAPI.invoke("resizeWindow", {
             width,
             height,
         });
     }
 
-    return await window.electronApi.invoke("resizeWindow", {
+    return await window.electronAPI.invoke("resizeWindow", {
         width,
         height: document.querySelector("body").clientHeight,
     });
@@ -71,15 +71,18 @@ export const enableSpaceClickThrough = () => {
     document
         .querySelector("#empty_space")
         .addEventListener("mouseenter", (e) => {
-            window.electronApi.invoke("setIgnoreMouseEvents", true);
+            window.electronAPI.invoke("setIgnoreMouseEvents", true);
         });
 
     document
         .querySelector("#empty_space")
         .addEventListener("mouseleave", (e) => {
-            window.electronApi.invoke("setIgnoreMouseEvents", false);
+            window.electronAPI.invoke("setIgnoreMouseEvents", false);
         });
 };
 
+// get icon of processes
 export const getIconOfProcesses = () =>
-    window.electronApi.invoke("getIconOfProcesses");
+    window.electronAPI.invoke("getIconOfProcesses");
+
+

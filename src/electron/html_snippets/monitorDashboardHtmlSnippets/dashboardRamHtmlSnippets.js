@@ -10,6 +10,10 @@ const generateRAMListHtmlSnippet = (ramTaskList) => `
         ramTaskList
     )}
     </div>
+    <div id="monitor_dashboard_ram_detail">
+        <div id="monitor_dashboard_ram_pie">
+        <div>
+    <div>
 </div>
 `;
 /**

@@ -79,6 +79,9 @@ const killTaskByName = (e, imageName) =>
         return stdout;
     });
 
+/**
+ * Get icon of processes(Icons would be stored in `static/processIcons`)
+ */
 let isGettingIconOfProcesses = false;
 let isAvoidFetchingIconOfProcesses = false;
 const getIconOfProcesses = async () => {
