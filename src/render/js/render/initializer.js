@@ -30,6 +30,9 @@ export const enableSpaceClickThrough = () => {
     })
 }
 
+/**
+ * Enable data fetching auto run and stop.
+ */
 export function enableAutoRunStop() {
     window.electronAPI.listen('stopApp', stop)
     window.electronAPI.listen('runApp', () => {
@@ -37,6 +40,9 @@ export function enableAutoRunStop() {
     })
 }
 
+/**
+ * Start data fetching and update monitor summary.
+ */
 const summaryDataFetchingIntervals = []
 export async function run() {
     const summaryItemRecord = electronStore.get('summaryItemRecord')
@@ -52,6 +58,7 @@ export async function run() {
 
     await fillMonitorSummary(summaryItemRecord, staticInfo)
     if (isKeepRefreshing) {
+        summaryDataFetchingIntervals.forEach(interval => clearInterval(interval))
         summaryDataFetchingIntervals.push(
             setInterval(async () => {
                 await fillMonitorSummary(summaryItemRecord, staticInfo)
@@ -60,10 +67,12 @@ export async function run() {
     }
 }
 
+/**
+ * Stop data fetching and close dashboard.
+ */
 export function stop() {
     closeDashboard()
     setTimeout(() => {
-        // Stop data fetching.
         summaryDataFetchingIntervals.forEach(interval => clearInterval(interval))
     }, 3000)
 }

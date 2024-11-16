@@ -1,6 +1,6 @@
 .monitor_summary {
     display: flex;
-    height: 25px;
+    height: 26px;
     background: rgba(8, 8, 8, 0.8);
 }
 
@@ -17,7 +17,7 @@
 .monitor_summary_data_label {
     margin-right: 0.25rem;
     font-size: 0.75rem;
-    line-height: 25px;
+    line-height: 26px;
     overflow: auto;
     user-select: none;
 }
@@ -25,7 +25,7 @@
 .monitor_summary_data_value {
     margin-right: 0.25rem;
     font-size: 0.75rem;
-    line-height: 25px;
+    line-height: 26px;
     overflow: auto;
     user-select: none;
 }

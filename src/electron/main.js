@@ -1,5 +1,7 @@
 const {BrowserWindow, Tray, Menu, app, ipcMain} = require('electron')
 const path = require('node:path')
+const fs = require('node:fs')
+const {throttle} = require('lodash')
 const apis = require('./apis')
 const {
     customizedData: {position}
@@ -8,7 +10,7 @@ const createApplication = () => {
     const win = new BrowserWindow({
         x: position.x,
         y: position.y,
-        width: 0,
+        width: 100,
         height: 600,
         frame: false,
         transparent: true,
@@ -20,7 +22,25 @@ const createApplication = () => {
         }
     })
 
+    const savePosition = throttle(
+        () => {
+            const [x, y] = win.getPosition()
+            console.log(`Window moved to: x=${x}, y=${y}`)
+            const {customizedData} = require(path.resolve(__dirname, '../config/index.js'))
+            customizedData.position.x = x
+            customizedData.position.y = y
+            console.log(customizedData)
+
+            fs.writeFileSync(path.resolve(__dirname, '../config/customizedData.json'), JSON.stringify(customizedData), 'utf8')
+        },
+        1500,
+        {leading: false}
+    )
+
     win.loadFile(path.join(__dirname, '../render/html/index.html'))
+
+    // 监听窗口移动事件
+    win.on('move', savePosition)
 
     // Initialize tray menu
     const contextMenu = Menu.buildFromTemplate([

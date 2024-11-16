@@ -23,10 +23,6 @@ body {
     flex-direction: column;
 }
 
-.drag_handle {
-    width: 10px;
-    background-color: red;
-}
 .dragable {
     -webkit-user-select: none;
     user-select: none;

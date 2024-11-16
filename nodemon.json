@@ -1,5 +1,5 @@
 {
-    "ignore": ["node_modules", "dist"],
+    "ignore": ["node_modules", "dist", "config/customizedData.json"],
     "colours": true,
     "verbose": true,
     "restartable": "rs",

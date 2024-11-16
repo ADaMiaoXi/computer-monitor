@@ -1,17 +1,8 @@
 {
-    "position": {
-        "x": 1600,
-        "y": 500
-    },
+    "position": {"x": 2545, "y": 371},
     "launchConfiguration": {
-        "summary": {
-            "isKeepRefreshing": true,
-            "refreshInterval": 1200
-        },
-        "ramDashboard": {
-            "isKeepRefreshing": true,
-            "refreshInterval": 2500
-        }
+        "summary": {"isKeepRefreshing": false, "refreshInterval": 1200},
+        "ramDashboard": {"isKeepRefreshing": true, "refreshInterval": 2500}
     },
     "record": {
         "monitor_summary_downloadspeed": "DOWNLOAD_SPEED_HTML_SNIPPET",

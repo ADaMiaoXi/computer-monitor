@@ -135,6 +135,7 @@ export const openDashboard = async (displayContents, currentDashboardId) => {
 
     await displayContents(dashboard)
     if (isKeepRefreshing) {
+        clearInterval(interval)
         interval = setInterval(async () => {
             displayContents(dashboard)
         }, refreshInterval)
