@@ -1,39 +1,39 @@
 {
-  "name": "computer_monitor",
-  "version": "1.0.0",
-  "main": "src/electron/main.js",
-  "scripts": {
-    "launch": "nodemon --exec electron .",
-    "build": "electron-builder"
-  },
-  "build": {
-    "appId": "com.shijianshu.monitor",
-    "win": {
-      "icon": "./assets/icons/logo.ico",
-      "target": [
-        {
-          "target": "nsis",
-          "arch": [
-            "x64"
-          ]
-        }
-      ]
+    "name": "computer_monitor",
+    "version": "1.0.0",
+    "main": "src/electron/main.js",
+    "scripts": {
+        "launch": "nodemon --exec electron .",
+        "build": "electron-builder"
     },
-    "nsis": {
-      "oneClick": false,
-      "perMachine": true,
-      "allowToChangeInstallationDirectory": true
+    "build": {
+        "appId": "com.shijianshu.monitor",
+        "win": {
+            "icon": "./assets/icons/logo.ico",
+            "target": [
+                {
+                    "target": "nsis",
+                    "arch": [
+                        "x64"
+                    ]
+                }
+            ]
+        },
+        "nsis": {
+            "oneClick": false,
+            "perMachine": true,
+            "allowToChangeInstallationDirectory": true
+        }
+    },
+    "author": "",
+    "license": "ISC",
+    "description": "",
+    "devDependencies": {
+        "electron": "^33.0.1",
+        "electron-builder": "^25.1.8",
+        "nodemon": "^3.1.7"
+    },
+    "dependencies": {
+        "iconv-lite": "^0.6.3"
     }
-  },
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "devDependencies": {
-    "electron": "^33.0.1",
-    "electron-builder": "^25.1.8",
-    "nodemon": "^3.1.7"
-  },
-  "dependencies": {
-    "iconv-lite": "^0.6.3"
-  }
 }

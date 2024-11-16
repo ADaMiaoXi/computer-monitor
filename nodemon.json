@@ -1,16 +1,11 @@
 {
-    "ignore": [
-        "node_modules",
-        "dist"
-    ],
+    "ignore": ["node_modules", "dist"],
     "colours": true,
     "verbose": true,
     "restartable": "rs",
-    "watch": [
-        "*.*"
-    ],
+    "watch": ["*.*"],
     "env": {
         "NODE_ENV": "development"
-      },
+    },
     "ext": "html,js,cjs,css,json"
 }

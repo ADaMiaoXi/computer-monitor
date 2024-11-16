@@ -27,7 +27,7 @@
     display: block;
 }
 
-.monitor_dashboard_ram_list_item_logo{
+.monitor_dashboard_ram_list_item_logo {
     width: 1rem;
     height: 1rem;
 }
@@ -60,4 +60,3 @@
     color: red;
     cursor: pointer;
 }
-

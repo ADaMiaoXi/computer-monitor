@@ -5,9 +5,9 @@
  */
 function getGPUProductName(lines) {
     return lines
-        .find((line) => line.includes("Product Name"))
-        .split(":")[1]
-        .trim();
+        .find(line => line.includes('Product Name'))
+        .split(':')[1]
+        .trim()
 }
 
 /**
@@ -16,16 +16,14 @@ function getGPUProductName(lines) {
  * @returns {object<{GPUUsage,GPUMemoryUsage,GPUEncoderUsage,GPUDecoderUsage}>} GPU Usage
  */
 function getGPUUsage(lines) {
-    const utilizationLineIndex = lines.findIndex((line) =>
-        line.includes("Utilization")
-    );
+    const utilizationLineIndex = lines.findIndex(line => line.includes('Utilization'))
 
     return {
-        GPUUsage: lines[utilizationLineIndex + 1].split(":")[1].trim(),
-        GPUMemoryUsage: lines[utilizationLineIndex + 2].split(":")[1].trim(),
-        GPUEncoderUsage: lines[utilizationLineIndex + 3].split(":")[1].trim(),
-        GPUDecoderUsage: lines[utilizationLineIndex + 4].split(":")[1].trim(),
-    };
+        GPUUsage: lines[utilizationLineIndex + 1].split(':')[1].trim(),
+        GPUMemoryUsage: lines[utilizationLineIndex + 2].split(':')[1].trim(),
+        GPUEncoderUsage: lines[utilizationLineIndex + 3].split(':')[1].trim(),
+        GPUDecoderUsage: lines[utilizationLineIndex + 4].split(':')[1].trim()
+    }
 }
 
 /**
@@ -34,10 +32,8 @@ function getGPUUsage(lines) {
  * @returns {string} GPU Temperature}
  */
 function getGPUTemperature(lines) {
-    const GPUCurrentTemperatureIndex = lines.findIndex((line) =>
-        line.includes("GPU Current Temp")
-    );
-    return lines[GPUCurrentTemperatureIndex].split(":")[1].trim();
+    const GPUCurrentTemperatureIndex = lines.findIndex(line => line.includes('GPU Current Temp'))
+    return lines[GPUCurrentTemperatureIndex].split(':')[1].trim()
 }
 
 /**
@@ -46,12 +42,12 @@ function getGPUTemperature(lines) {
  * @returns {object<{GraphicsSpeed,MemorySpeed,VideoSpeed}>} GPU Clock Speed
  */
 function getGPUSpeed(lines) {
-    const clockLineIndex = lines.findIndex((line) => line === "Clocks");
+    const clockLineIndex = lines.findIndex(line => line === 'Clocks')
     return {
-        GraphicsSpeed: lines[clockLineIndex + 1].split(":")[1].trim(),
-        MemorySpeed: lines[clockLineIndex + 3].split(":")[1].trim(),
-        VideoSpeed: lines[clockLineIndex + 4].split(":")[1].trim(),
-    };
+        GraphicsSpeed: lines[clockLineIndex + 1].split(':')[1].trim(),
+        MemorySpeed: lines[clockLineIndex + 3].split(':')[1].trim(),
+        VideoSpeed: lines[clockLineIndex + 4].split(':')[1].trim()
+    }
 }
 
 /**
@@ -60,8 +56,8 @@ function getGPUSpeed(lines) {
  * @returns {string} GPU Fan Speed
  */
 function getFanSpeed(lines) {
-    const fanSpeedIndex = lines.findIndex((line) => line.includes("Fan Speed"));
-    return lines[fanSpeedIndex].split(":")[1].trim();
+    const fanSpeedIndex = lines.findIndex(line => line.includes('Fan Speed'))
+    return lines[fanSpeedIndex].split(':')[1].trim()
 }
 
 /**
@@ -70,17 +66,17 @@ function getFanSpeed(lines) {
  * @returns {object<{GPUProductName,GPUUsage,GPUTemperature,GPUspeed,GPUFanSpeed}>} GPU Info
  */
 function getGPUInfo(lines) {
-    console.info(`[Info] Is getting GPU info...`);
+    console.info(`[Info] Is getting GPU info...`)
 
     return {
         GPUProductName: getGPUProductName(lines),
         GPUUsage: getGPUUsage(lines),
         GPUTemperature: getGPUTemperature(lines),
         GPUspeed: getGPUSpeed(lines),
-        GPUFanSpeed: getFanSpeed(lines),
-    };
+        GPUFanSpeed: getFanSpeed(lines)
+    }
 }
 
 module.exports = {
-    getGPUInfo,
-};
+    getGPUInfo
+}

@@ -22,7 +22,7 @@ const DOWNLOAD_SPEED_HTML_SNIPPET = `
         </svg>
     </div>
     <div class="monitor_summary_data_value">****.** KB/s</div>
-</div>`;
+</div>`
 
 const UPLOAD_SPEED_HTML_SNIPPET = `
 <div
@@ -45,7 +45,7 @@ const UPLOAD_SPEED_HTML_SNIPPET = `
         />
     </svg>
     <div class="monitor_summary_data_value">****.** KB/s</div>
-</div>`;
+</div>`
 
 const GPU_USAGE_SNIPPET = `
 <div
@@ -57,7 +57,7 @@ const GPU_USAGE_SNIPPET = `
     
     <div class="monitor_summary_data_label">Usage:</div>
     <div class="monitor_summary_data_value usage">*** %</div>
-</div>`;
+</div>`
 
 const CPU_USAGE_SNIPPET = `
 <div
@@ -68,7 +68,7 @@ const CPU_USAGE_SNIPPET = `
 >
     <div class="monitor_summary_data_label">Usage:</div>
     <div class="monitor_summary_data_value usage">**.** %</div>
-</div>`;
+</div>`
 
 const RAM_USAGE_SNIPPET = `
 <div
@@ -79,12 +79,12 @@ const RAM_USAGE_SNIPPET = `
 >
     <div class="monitor_summary_data_label">Usage:</div>
     <div class="monitor_summary_data_value usage">**.** %</div>
-</div>`;
+</div>`
 
 module.exports = {
     DOWNLOAD_SPEED_HTML_SNIPPET,
     UPLOAD_SPEED_HTML_SNIPPET,
     GPU_USAGE_SNIPPET,
     CPU_USAGE_SNIPPET,
-    RAM_USAGE_SNIPPET,
-};
+    RAM_USAGE_SNIPPET
+}

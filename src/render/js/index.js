@@ -7,37 +7,37 @@ import {
     getCustomizedData,
     enableAutoRunStop,
     run,
-    electronStore,
-} from "./render/index.js";
+    electronStore
+} from './render/index.js'
 
 /**
  * Render program window.
  */
 async function render() {
     // Retrieve recorded summary data.
-    const { record } = await getCustomizedData();
+    const {record} = await getCustomizedData()
     // Initialize electron store.
-    electronStore.initialize();
-    electronStore.set("summaryItemRecord", record);
+    electronStore.initialize()
+    electronStore.set('summaryItemRecord', record)
     // Initialize monitor summary.
-    await initMonitorSummary();
+    await initMonitorSummary()
     // Resize window size, set timeout to wait documents prepared.
-    await new Promise((resolve) => {
+    await new Promise(resolve => {
         setTimeout(async () => {
-            resolve(await resizeWindow());
-        }, 50);
-    });
+            resolve(await resizeWindow())
+        }, 50)
+    })
     // Attach events for monitor summary view.
-    enableSummaryEvents();
+    enableSummaryEvents()
     // Enable click through for empty space.
-    enableSpaceClickThrough();
+    enableSpaceClickThrough()
     // Get icon of processes.
-    getIconOfProcesses();
+    getIconOfProcesses()
     // Run summary data fetching.
-    run();
+    run()
     // Enable auto run and stop.
-    enableAutoRunStop();
+    enableAutoRunStop()
 }
 
 // Invoke render function.
-render();
+render()

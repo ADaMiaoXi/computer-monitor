@@ -2,7 +2,7 @@ const NETWORK_SECTION_HTML_SNIPPET = `
 <div
     id="monitor_summary_network_section"
     class="monitor_summary_section"
-></div>`;
+></div>`
 
 const CPU_SECTION_HTML_SNIPPET = `
 <div
@@ -22,7 +22,7 @@ const CPU_SECTION_HTML_SNIPPET = `
             href="../../assets/svg/cpu.svg"
         />
     </svg>
-</div>`;
+</div>`
 
 const GPU_SECTION_HTML_SNIPPET = `
 <div
@@ -42,7 +42,7 @@ const GPU_SECTION_HTML_SNIPPET = `
              href="../../assets/svg/gpu.svg"
          />
      </svg>
- </div>`;
+ </div>`
 
 const RAM_SECTION_HTML_SNIPPET = `
 <div
@@ -62,11 +62,11 @@ const RAM_SECTION_HTML_SNIPPET = `
             href="../../assets/svg/ram.svg"
         />
     </svg>
-</div>`;
+</div>`
 
 module.exports = {
     NETWORK_SECTION_HTML_SNIPPET,
     CPU_SECTION_HTML_SNIPPET,
     GPU_SECTION_HTML_SNIPPET,
-    RAM_SECTION_HTML_SNIPPET,
-};
+    RAM_SECTION_HTML_SNIPPET
+}

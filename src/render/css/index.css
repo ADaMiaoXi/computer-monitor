@@ -1,5 +1,5 @@
-@import "./monitorSummary.css";
-@import "./monitorDashboard.css";
+@import './monitorSummary.css';
+@import './monitorDashboard.css';
 
 html,
 body {
@@ -14,7 +14,7 @@ body {
     height: 100%;
 }
 
-#empty_space{
+#empty_space {
     flex-grow: 1;
 }
 

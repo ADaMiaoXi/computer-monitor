@@ -1,5 +1,5 @@
-const dashboardRamHtmlSnippets = require("./dashboardRamHtmlSnippets");
+const dashboardRamHtmlSnippets = require('./dashboardRamHtmlSnippets')
 
 module.exports = {
-    ...dashboardRamHtmlSnippets,
-};
+    ...dashboardRamHtmlSnippets
+}

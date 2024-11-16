@@ -1,9 +1,4 @@
-import {
-    insertHTMLSnippets,
-    getDynamicInfo,
-    getValue,
-    electronStore,
-} from "./index.js";
+import {insertHTMLSnippets, getDynamicInfo, getValue, electronStore} from './index.js'
 
 /**
  * Fill data into monitor summary
@@ -11,46 +6,35 @@ import {
  * @param {Object} staticInfo
  */
 export const fillMonitorSummary = async (summaryItemRecord, staticInfo) => {
-    const dynamicInfo = await getDynamicInfo(staticInfo);
+    const dynamicInfo = await getDynamicInfo(staticInfo)
 
-    electronStore.set("monitorInfo", dynamicInfo);
+    electronStore.set('monitorInfo', dynamicInfo)
 
-    const ids = Object.keys(summaryItemRecord);
+    const ids = Object.keys(summaryItemRecord)
     for (let id of ids) {
-        const path = document.getElementById(id).dataset.path;
-        const value = getValue(dynamicInfo, path);
-        const dataContainer = document.querySelector(
-            `#${id} .monitor_summary_data_value`
-        );
-        dataContainer.innerText = value;
+        const path = document.getElementById(id).dataset.path
+        const value = getValue(dynamicInfo, path)
+        const dataContainer = document.querySelector(`#${id} .monitor_summary_data_value`)
+        dataContainer.innerText = value
     }
-};
+}
 
 /**
  * Init monitor summary
  * @param {Object} summaryItemRecord
  */
 export const initMonitorSummary = async () => {
-    const summaryItemRecord = electronStore.get("summaryItemRecord");
-    const keys = Object.keys(summaryItemRecord);
-    const initializedSections = [];
+    const summaryItemRecord = electronStore.get('summaryItemRecord')
+    const keys = Object.keys(summaryItemRecord)
+    const initializedSections = []
     for (let key of keys) {
-        const div = document.createElement("div");
-        div.innerHTML = await window.electronAPI.invoke(
-            "getHTMLSnippets",
-            summaryItemRecord[key]
-        );
-        const parentId = div.firstElementChild.dataset.parentid;
+        const div = document.createElement('div')
+        div.innerHTML = await window.electronAPI.invoke('getHTMLSnippets', summaryItemRecord[key])
+        const parentId = div.firstElementChild.dataset.parentid
         if (!initializedSections.includes(parentId)) {
-            insertHTMLSnippets(
-                `#monitor_summary`,
-                await window.electronAPI.invoke(
-                    "getHTMLSnippetsNameById",
-                    parentId
-                )
-            );
-            initializedSections.push(parentId);
+            insertHTMLSnippets(`#monitor_summary`, await window.electronAPI.invoke('getHTMLSnippetsNameById', parentId))
+            initializedSections.push(parentId)
         }
-        insertHTMLSnippets(`#${parentId}`, summaryItemRecord[key]);
+        insertHTMLSnippets(`#${parentId}`, summaryItemRecord[key])
     }
-};
+}
