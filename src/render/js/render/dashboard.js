@@ -1,10 +1,9 @@
-import { launchConfiguration } from "../../../configuration/index.js";
-import { getIconOfProcesses } from "./common.js";
+import { getIconOfProcesses, getCustomizedData } from "./index.js";
 /**
  * Open CPU Dashboard
  * Click event callback of CPU section on monitor summary view
  */
-const openCPUDashboard = async () => {
+export const openCPUDashboard = async () => {
     const displayCPUDashboard = async (dashboard) => {
         const div = document.createElement("div");
         div.innerHTML = `<h1 id="monitor_dashboard_cpu">CPU</h1>`;
@@ -26,7 +25,7 @@ const openCPUDashboard = async () => {
  * Open RAM Dashboard
  * Click event callback of RAM section on monitor summary view
  */
-const openRAMDashboard = async () => {
+export const openRAMDashboard = async () => {
     const displayRAMDashboard = async (dashboard) => {
         console.log(
             "window.electronStore.monitorInfo:",
@@ -66,12 +65,12 @@ const openRAMDashboard = async () => {
             //const regex = /^douyin/;
             img.setAttribute(
                 "src",
-                `../../../static/processIcons/${taskRamItem.children[0].innerText}.png`
+                `../../assets/processIcons/${taskRamItem.children[0].innerText}.png`
             );
             img.addEventListener("error", (e) => {
                 e.target.setAttribute(
                     "src",
-                    "../../../static/processIcons/default.png"
+                    "../../assets/processIcons/default.png"
                 );
             });
             img.classList.add("monitor_dashboard_ram_list_item_logo");
@@ -154,8 +153,8 @@ export const openDashboard = async (displayContents, currentDashboardId) => {
     }
 
     const {
-        ramDashboard: { isKeepRefreshing, refreshInterval },
-    } = launchConfiguration;
+        launchConfiguration: {ramDashboard: { isKeepRefreshing, refreshInterval }},
+    } = await getCustomizedData();
 
     await displayContents(dashboard);
     if (isKeepRefreshing) {
@@ -186,15 +185,3 @@ const closeOtherDashoard = (currentDashboardId) => {
     }
 };
 
-/**
- * Enable events invokers
- */
-export const enableSummaryEvents = () => {
-    document
-        .querySelector("#monitor_summary_cpu_section")
-        .addEventListener("click", openCPUDashboard);
-
-    document
-        .querySelector("#monitor_summary_ram_section")
-        .addEventListener("click", openRAMDashboard);
-};

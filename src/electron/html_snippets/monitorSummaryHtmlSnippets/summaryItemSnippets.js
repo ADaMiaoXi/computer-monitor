@@ -17,7 +17,7 @@ const DOWNLOAD_SPEED_HTML_SNIPPET = `
             <image
                 height="15"
                 width="15"
-                href="../../../static/svg/download.svg"
+                href="../../assets/svg/download.svg"
             />
         </svg>
     </div>
@@ -41,7 +41,7 @@ const UPLOAD_SPEED_HTML_SNIPPET = `
         <image
             height="15"
             width="15"
-            href="../../../static/svg/upload.svg"
+            href="../../assets/svg/upload.svg"
         />
     </svg>
     <div class="monitor_summary_data_value">****.** KB/s</div>

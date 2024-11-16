@@ -80,7 +80,7 @@ const killTaskByName = (e, imageName) =>
     });
 
 /**
- * Get icon of processes(Icons would be stored in `static/processIcons`)
+ * Get icon of processes(Icons would be stored in `assets/processIcons`)
  */
 let isGettingIconOfProcesses = false;
 let isAvoidFetchingIconOfProcesses = false;
@@ -106,7 +106,7 @@ const getIconOfProcesses = async () => {
         )
         .filter((lineArr) => lineArr.length === 2);
 
-    const targetFloder = "../../../../static/processIcons";
+    const targetFloder = "../../../assets/processIcons";
     if (!fs.existsSync(path.join(__dirname, targetFloder))) {
         fs.mkdirSync(path.join(__dirname, targetFloder));
     }
@@ -120,13 +120,20 @@ const getIconOfProcesses = async () => {
                 imageName
             );
             if (!fs.existsSync(targetFilePath)) {
-                console.log("targetFilePath:", line[0]);
                 const imageBuffer = (await app.getFileIcon(line[0])).toPNG();
                 fs.writeFileSync(targetFilePath, imageBuffer);
             }
         }
     }
     isGettingIconOfProcesses = false;
+};
+
+const getCustomizedData = () => {
+    const { customizedData } = require(path.resolve(
+        __dirname,
+        "../../../../local/index.js"
+    ));
+    return customizedData;
 };
 
 module.exports = {
@@ -137,4 +144,5 @@ module.exports = {
     moveWindow,
     killTaskByName,
     getIconOfProcesses,
+    getCustomizedData
 };

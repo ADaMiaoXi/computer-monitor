@@ -9,7 +9,7 @@
   "build": {
     "appId": "com.shijianshu.monitor",
     "win": {
-      "icon": "./static/icons/logo.ico",
+      "icon": "./assets/icons/logo.ico",
       "target": [
         {
           "target": "nsis",

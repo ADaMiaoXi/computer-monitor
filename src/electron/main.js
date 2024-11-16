@@ -1,13 +1,13 @@
-const { BrowserWindow, Tray, Menu, app, ipcMain, screen } = require("electron");
+const { BrowserWindow, Tray, Menu, app, ipcMain } = require("electron");
 const path = require("node:path");
 const apis = require("./apis");
-
+const {
+    customizedData: { position },
+} = require(path.resolve(__dirname, "../../local/index.js"));
 const createApplication = () => {
-    const primaryDisplay = screen.getPrimaryDisplay();
-    const { width, height } = primaryDisplay.workAreaSize;
     const win = new BrowserWindow({
-        x: Math.floor(width * 0.65),
-        y: Math.floor(height * 0.35),
+        x: position.x,
+        y: position.y,
         width: 0,
         height: 600,
         frame: false,
@@ -38,8 +38,8 @@ const createApplication = () => {
         },
     ]);
 
-    let iconPath = path.join(__dirname, "../../static/icons/logo.ico");
-    let appTray = new Tray(iconPath);
+    const iconPath = path.join(__dirname, "../assets/icons/logo.ico");
+    const appTray = new Tray(iconPath);
     appTray.setToolTip("Monitor");
     appTray.setContextMenu(contextMenu);
 

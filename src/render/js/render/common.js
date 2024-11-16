@@ -64,25 +64,18 @@ export const resizeWindow = async (paramWidth, paramHeight) => {
     });
 };
 
-/**
- * Enable click through for the empty space on window
- */
-export const enableSpaceClickThrough = () => {
-    document
-        .querySelector("#empty_space")
-        .addEventListener("mouseenter", (e) => {
-            window.electronAPI.invoke("setIgnoreMouseEvents", true);
-        });
-
-    document
-        .querySelector("#empty_space")
-        .addEventListener("mouseleave", (e) => {
-            window.electronAPI.invoke("setIgnoreMouseEvents", false);
-        });
-};
-
 // get icon of processes
 export const getIconOfProcesses = () =>
     window.electronAPI.invoke("getIconOfProcesses");
 
+export const electronStore = {
+    initialize: () => (window.electronStore = new Map()),
+    has: (key) => window.electronStore.has(key),
+    get: (key) => window.electronStore.get(key),
+    set: (key, value) => window.electronStore.set(key, value),
+    delete: (key) => window.electronStore.delete(key),
+    clear: () => window.electronStore.clear(),
+};
 
+export const getCustomizedData = () =>
+    window.electronAPI.invoke("getCustomizedData");
