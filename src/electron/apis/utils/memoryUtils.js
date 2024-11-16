@@ -5,7 +5,7 @@ const {totalmem, freemem} = require('node:os')
  * @returns {string} Total memory in GB
  */
 function getTotalMemory() {
-    return `${Number(totalmem() / 1024 / 1024 / 1024).toFixed(2)} GB`
+    return `${Number(totalmem() / 1024 / 1024).toFixed(2)} MB`
 }
 
 /**
@@ -13,7 +13,7 @@ function getTotalMemory() {
  * @returns {string} Free memory in GB
  */
 function getFreeMemory() {
-    return `${Number(freemem() / 1024 / 1024 / 1024).toFixed(2)} GB`
+    return `${Number(freemem() / 1024 / 1024).toFixed(2)} MB`
 }
 
 /**

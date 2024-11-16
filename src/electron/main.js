@@ -22,16 +22,19 @@ const createApplication = () => {
         }
     })
 
+    // Save position if window moved
     const savePosition = throttle(
         () => {
-            const [x, y] = win.getPosition()
-            console.log(`Window moved to: x=${x}, y=${y}`)
             const {customizedData} = require(path.resolve(__dirname, '../config/index.js'))
+            const [x, y] = win.getPosition()
             customizedData.position.x = x
             customizedData.position.y = y
-            console.log(customizedData)
-
-            fs.writeFileSync(path.resolve(__dirname, '../config/customizedData.json'), JSON.stringify(customizedData), 'utf8')
+            const targetPath = path.resolve(__dirname, '../config/customizedData.json')
+            fs.writeFileSync(
+                targetPath,
+                JSON.stringify(customizedData),
+                'utf8'
+            )
         },
         1500,
         {leading: false}
@@ -39,7 +42,6 @@ const createApplication = () => {
 
     win.loadFile(path.join(__dirname, '../render/html/index.html'))
 
-    // 监听窗口移动事件
     win.on('move', savePosition)
 
     // Initialize tray menu

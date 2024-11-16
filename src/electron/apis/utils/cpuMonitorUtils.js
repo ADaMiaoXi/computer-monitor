@@ -1,4 +1,5 @@
 const os = require('os')
+const path = require('path')
 /**
  * Get CPU Max Clock Speed from given lines
  * @param {Array<string>} lines lines of command stdout
@@ -19,7 +20,7 @@ const getCPUUsage = function () {
     let startStatus = getCPUInfo()
     let startIdleTime = startStatus.idleTime
     let startTotalTime = startStatus.totalTime
-
+    const {customizedData:{launchConfiguration:{cpuSamplingDuration}}} = require(path.resolve(__dirname, '../../../config/index.js'))
     return new Promise(resolve => {
         setTimeout(function () {
             let endStats = getCPUInfo()
@@ -31,7 +32,7 @@ const getCPUUsage = function () {
             let usePercentage = 1 - idleTime / totalTime
 
             resolve(`${(usePercentage * 100).toFixed(2)}%`)
-        }, 1100)
+        }, cpuSamplingDuration)
     })
 }
 

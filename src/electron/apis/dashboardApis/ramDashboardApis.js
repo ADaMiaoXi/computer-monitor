@@ -9,9 +9,9 @@ const getRAMTasklist = async () => {
     return getProcessedRAMTasklist(lines)
 }
 
-const getRAMDashboardHtml = async () => {
+const getRAMDashboardHtml = async (e, {freeMemory, totalMemory}) => {
     const ramTaskList = await getRAMTasklist()
-    return generateRAMListHtmlSnippet(ramTaskList)
+    return generateRAMListHtmlSnippet(ramTaskList, {freeMemory, totalMemory})
 }
 
 module.exports = {

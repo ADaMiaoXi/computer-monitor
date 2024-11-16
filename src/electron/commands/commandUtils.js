@@ -1,6 +1,6 @@
 const {exec} = require('child_process')
 
-var iconv = require('iconv-lite')
+const iconv = require('iconv-lite')
 
 /**
  * Execute windows CMD command.
