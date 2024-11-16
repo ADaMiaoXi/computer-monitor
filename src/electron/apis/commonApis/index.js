@@ -131,7 +131,7 @@ const getIconOfProcesses = async () => {
 const getCustomizedData = () => {
     const { customizedData } = require(path.resolve(
         __dirname,
-        "../../../../local/index.js"
+        "../../../config/index.js"
     ));
     return customizedData;
 };

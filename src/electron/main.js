@@ -3,7 +3,7 @@ const path = require("node:path");
 const apis = require("./apis");
 const {
     customizedData: { position },
-} = require(path.resolve(__dirname, "../../local/index.js"));
+} = require(path.resolve(__dirname, "../config/index.js"));
 const createApplication = () => {
     const win = new BrowserWindow({
         x: position.x,
