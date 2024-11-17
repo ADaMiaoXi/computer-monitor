@@ -1,5 +1,3 @@
 node_modules/
 dist/
 .vscode
-src/assets/processIcons/*
-!src/assets/processIcons/default.png
