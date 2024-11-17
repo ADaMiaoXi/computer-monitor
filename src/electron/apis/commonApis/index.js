@@ -77,9 +77,9 @@ const killTaskByName = (e, imageName) =>
  */
 let isGettingIconOfProcesses = false
 let isAvoidFetchingIconOfProcesses = false
-const getIconOfProcesses = async () => {
+const getIconOfProcesses = async (e, forced = false) => {
     isAvoidFetchingIconOfProcesses = !isAvoidFetchingIconOfProcesses
-    if (isAvoidFetchingIconOfProcesses) {
+    if (isAvoidFetchingIconOfProcesses && !forced) {
         return
     }
 
@@ -96,15 +96,19 @@ const getIconOfProcesses = async () => {
         )
         .filter(lineArr => lineArr.length === 2)
 
-    const targetFloder = '../../../assets/processIcons'
-    if (!fs.existsSync(path.join(__dirname, targetFloder))) {
-        fs.mkdirSync(path.join(__dirname, targetFloder))
+    const targetFloder = path.resolve(app.getPath('userData'), 'userData/processIcons')
+    if (!fs.existsSync(targetFloder)) {
+        fs.mkdirSync(targetFloder)
+        fs.cpSync(
+            path.resolve(__dirname, '../../../configTemplate/defaultIcon.png'),
+            path.resolve(targetFloder, 'defaultIcon.png')
+        )
     }
     for (let i = 0; i < porcessedLines.length; i++) {
         const line = porcessedLines[i]
         if (line[1] && line[1].endsWith('.exe')) {
             const imageName = `${line[1]}.png`
-            const targetFilePath = path.join(__dirname, targetFloder, imageName)
+            const targetFilePath = path.join(targetFloder, imageName)
             if (!fs.existsSync(targetFilePath)) {
                 const imageBuffer = (await app.getFileIcon(line[0])).toPNG()
                 fs.writeFileSync(targetFilePath, imageBuffer)
@@ -114,10 +118,16 @@ const getIconOfProcesses = async () => {
     isGettingIconOfProcesses = false
 }
 
-const getCustomizedData = () => {
-    const {customizedData} = require(path.resolve(__dirname, '../../../config/index.js'))
-    return customizedData
-}
+const getCustomizedData = () => require(path.resolve(app.getPath('userData'), 'userData/customizedData.json'))
+
+const saveCustomizedData = newData =>
+    fs.writeFileSync(
+        path.resolve(app.getPath('userData'), 'userData/customizedData.json'),
+        JSON.stringify(newData),
+        'utf8'
+    )
+
+const getUserDataPath = () => app.getPath('userData')
 
 module.exports = {
     getHTMLSnippets,
@@ -127,5 +137,7 @@ module.exports = {
     moveWindow,
     killTaskByName,
     getIconOfProcesses,
-    getCustomizedData
+    getCustomizedData,
+    saveCustomizedData,
+    getUserDataPath
 }

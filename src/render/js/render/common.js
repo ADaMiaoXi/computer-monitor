@@ -61,7 +61,7 @@ export const resizeWindow = async (paramWidth, paramHeight) => {
 }
 
 // get icon of processes
-export const getIconOfProcesses = () => window.electronAPI.invoke('getIconOfProcesses')
+export const getIconOfProcesses = forced => window.electronAPI.invoke('getIconOfProcesses', forced)
 
 export const electronStore = {
     initialize: () => (window.electronStore = new Map()),
@@ -73,3 +73,5 @@ export const electronStore = {
 }
 
 export const getCustomizedData = () => window.electronAPI.invoke('getCustomizedData')
+
+export const getUserDataPath = () => window.electronAPI.invoke('getUserDataPath')

@@ -1,4 +1,4 @@
-import {getIconOfProcesses, openDashboard} from '../index.js'
+import {getIconOfProcesses, openDashboard, electronStore} from '../index.js'
 
 /**
  * Open RAM Dashboard
@@ -24,6 +24,8 @@ const displayRAMDashboard = async dashboard => {
     const taskRamList = div.firstElementChild.children[1].children
     const taskRamItems = []
 
+    const userDataPath = await electronStore.get('userDataPath')
+
     for (let i = 0; i < taskRamList.length; i++) {
         const taskRamItem = taskRamList[i]
 
@@ -39,10 +41,10 @@ const displayRAMDashboard = async dashboard => {
 
         // Add logo image
         const img = document.createElement('img')
-        //const regex = /^douyin/;
-        img.setAttribute('src', `../../assets/processIcons/${taskRamItem.children[0].innerText}.png`)
+
+        img.setAttribute('src', `${userDataPath}/userData/processIcons/${taskRamItem.children[0].innerText}.png`)
         img.addEventListener('error', e => {
-            e.target.setAttribute('src', '../../assets/processIcons/default.png')
+            e.target.setAttribute('src', `${userDataPath}/userData/processIcons/defaultIcon.png`)
         })
         img.classList.add('monitor_dashboard_ram_list_item_logo')
         taskRamItem.insertBefore(img, taskRamItem.firstElementChild)

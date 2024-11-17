@@ -3,10 +3,9 @@ const path = require('node:path')
 const fs = require('node:fs')
 const {throttle} = require('lodash')
 const apis = require('./apis')
-const {
-    customizedData: {position}
-} = require(path.resolve(__dirname, '../config/index.js'))
+const {getCustomizedData, saveCustomizedData} = require('./apis/commonApis')
 const createApplication = () => {
+    const {position} = getCustomizedData()
     const win = new BrowserWindow({
         x: position.x,
         y: position.y,
@@ -25,16 +24,11 @@ const createApplication = () => {
     // Save position if window moved
     const savePosition = throttle(
         () => {
-            const {customizedData} = require(path.resolve(__dirname, '../config/index.js'))
+            const customizedData = getCustomizedData()
             const [x, y] = win.getPosition()
             customizedData.position.x = x
             customizedData.position.y = y
-            const targetPath = path.resolve(__dirname, '../config/customizedData.json')
-            fs.writeFileSync(
-                targetPath,
-                JSON.stringify(customizedData),
-                'utf8'
-            )
+            saveCustomizedData(customizedData)
         },
         1500,
         {leading: false}
@@ -82,7 +76,17 @@ const initializeElectronApis = () => {
     })
 }
 
+const initializeUserData = () => {
+    const userDataPath = path.resolve(app.getPath('userData'), 'userData')
+    if (!fs.existsSync(userDataPath)) {
+        const {customizedData} = require(path.resolve(__dirname, '../configTemplate/index.js'))
+        fs.mkdirSync(userDataPath)
+        fs.writeFileSync(path.resolve(userDataPath, 'customizedData.json'), JSON.stringify(customizedData), 'utf8')
+    }
+}
+
 app.whenReady().then(() => {
+    initializeUserData()
     initializeElectronApis()
     createApplication()
 })

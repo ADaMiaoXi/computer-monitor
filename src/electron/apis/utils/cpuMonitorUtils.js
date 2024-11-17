@@ -1,5 +1,7 @@
 const os = require('os')
 const path = require('path')
+const {app} = require('electron')
+const {getCustomizedData} = require('../commonApis')
 /**
  * Get CPU Max Clock Speed from given lines
  * @param {Array<string>} lines lines of command stdout
@@ -20,7 +22,9 @@ const getCPUUsage = function () {
     let startStatus = getCPUInfo()
     let startIdleTime = startStatus.idleTime
     let startTotalTime = startStatus.totalTime
-    const {customizedData:{launchConfiguration:{cpuSamplingDuration}}} = require(path.resolve(__dirname, '../../../config/index.js'))
+    const {
+        launchConfiguration: {cpuSamplingDuration}
+    } = getCustomizedData()
     return new Promise(resolve => {
         setTimeout(function () {
             let endStats = getCPUInfo()

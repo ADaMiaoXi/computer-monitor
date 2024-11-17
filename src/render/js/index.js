@@ -7,7 +7,8 @@ import {
     getCustomizedData,
     enableAutoRunStop,
     run,
-    electronStore
+    electronStore,
+    getUserDataPath
 } from './render/index.js'
 
 /**
@@ -19,6 +20,7 @@ async function render() {
     // Initialize electron store.
     electronStore.initialize()
     electronStore.set('summaryItemRecord', record)
+    electronStore.set('userDataPath', getUserDataPath())
     // Initialize monitor summary.
     await initMonitorSummary()
     // Resize window size, set timeout to wait documents prepared.
@@ -32,7 +34,7 @@ async function render() {
     // Enable click through for empty space.
     enableSpaceClickThrough()
     // Get icon of processes.
-    getIconOfProcesses()
+    getIconOfProcesses(true)
     // Run summary data fetching.
     run()
     // Enable auto run and stop.
