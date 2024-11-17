@@ -15,12 +15,12 @@ import {
  * Render program window.
  */
 async function render() {
-    // Retrieve recorded summary data.
-    const {record} = await getCustomizedData()
+    // Retrieve recorded data.
+    const customizedData = await getCustomizedData()
     // Initialize electron store.
     electronStore.initialize()
-    electronStore.set('summaryItemRecord', record)
     electronStore.set('userDataPath', getUserDataPath())
+    electronStore.set("customizedData", customizedData)
     // Initialize monitor summary.
     await initMonitorSummary()
     // Resize window size, set timeout to wait documents prepared.

@@ -106,7 +106,8 @@ const getDynamicInfo = async (e, {CPUModel, CPUMaxClockSpeed, networkName, total
         memory: {
             memoryUsage: memoryUsage,
             freeMemory: freeMemory,
-            totalMemory: totalMemory
+            totalMemory: totalMemory,
+            usedMemory: `${(Number(totalMemory.split(' ')[0]) - Number(freeMemory.split(' ')[0])).toFixed(2)} MB`
         }
     }
 }

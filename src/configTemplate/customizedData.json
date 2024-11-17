@@ -1,1 +1,23 @@
-{"position":{"x":2731,"y":704},"launchConfiguration":{"cpuSamplingDuration":1100,"summary":{"isKeepRefreshing":false,"refreshInterval":1200},"ramDashboard":{"isKeepRefreshing":false,"refreshInterval":2500}},"record":{"monitor_summary_downloadspeed":"DOWNLOAD_SPEED_HTML_SNIPPET","monitor_summary_uploadspeed":"UPLOAD_SPEED_HTML_SNIPPET","monitor_summary_cpuusage":"CPU_USAGE_SNIPPET","monitor_summary_gpuusage":"GPU_USAGE_SNIPPET","monitor_summary_ramusage":"RAM_USAGE_SNIPPET"},"mapOfElememtIdAndSnippetName":{"monitor_summary_downloadspeed":"DOWNLOAD_SPEED_HTML_SNIPPET","monitor_summary_uploadspeed":"UPLOAD_SPEED_HTML_SNIPPET","monitor_summary_gpuusage":"GPU_USAGE_SNIPPET","monitor_summary_cpuusage":"CPU_USAGE_SNIPPET","monitor_summary_ramusage":"RAM_USAGE_SNIPPET"}}
+{
+    "position": {"x": 600, "y": 400},
+    "launchConfiguration": {
+        "cpuSamplingDuration": 1100,
+        "summary": {"isKeepRefreshing": true, "refreshInterval": 1200},
+        "ramDashboard": {"isKeepRefreshing": true, "refreshInterval": 2500}
+    },
+    "summaryItemRecord": {
+        "monitor_summary_downloadspeed": "DOWNLOAD_SPEED_HTML_SNIPPET",
+        "monitor_summary_uploadspeed": "UPLOAD_SPEED_HTML_SNIPPET",
+        "monitor_summary_cpuusage": "CPU_USAGE_SNIPPET",
+        "monitor_summary_gpuusage": "GPU_USAGE_SNIPPET",
+        "monitor_summary_ramusage": "RAM_USAGE_SNIPPET"
+    },
+    "mapOfElememtIdAndSnippetName": {
+        "monitor_summary_downloadspeed": "DOWNLOAD_SPEED_HTML_SNIPPET",
+        "monitor_summary_uploadspeed": "UPLOAD_SPEED_HTML_SNIPPET",
+        "monitor_summary_gpuusage": "GPU_USAGE_SNIPPET",
+        "monitor_summary_cpuusage": "CPU_USAGE_SNIPPET",
+        "monitor_summary_ramusage": "RAM_USAGE_SNIPPET",
+        "monitor_summary_ramfree":"RAM_FREE_SNIPPET"
+    }
+}

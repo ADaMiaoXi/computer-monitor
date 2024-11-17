@@ -45,7 +45,6 @@ export function enableAutoRunStop() {
  */
 const summaryDataFetchingIntervals = []
 export async function run() {
-    const summaryItemRecord = electronStore.get('summaryItemRecord')
     // Fetch data for monitor summary. And store data in `window.electronStore.monitorInfo`
     // Refresh data every 1200ms.
     const staticInfo = await getStaticInfo()
@@ -54,14 +53,14 @@ export async function run() {
         launchConfiguration: {
             summary: {refreshInterval, isKeepRefreshing}
         }
-    } = await getCustomizedData()
+    } = await electronStore.get("customizedData")
 
-    await fillMonitorSummary(summaryItemRecord, staticInfo)
+    await fillMonitorSummary(staticInfo)
     if (isKeepRefreshing) {
         summaryDataFetchingIntervals.forEach(interval => clearInterval(interval))
         summaryDataFetchingIntervals.push(
             setInterval(async () => {
-                await fillMonitorSummary(summaryItemRecord, staticInfo)
+                await fillMonitorSummary(staticInfo)
             }, refreshInterval)
         )
     }

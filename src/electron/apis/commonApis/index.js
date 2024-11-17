@@ -32,6 +32,7 @@ const getHTMLSnippetsNameById = async (e, snippetId) => {
 const resizeWindow = (e, {width, height}) => {
     const browserWindow = BrowserWindow.fromWebContents(e.sender)
     browserWindow.setSize(width, height)
+    browserWindow.setContentSize(width, height)
     return [width, height]
 }
 
@@ -118,9 +119,18 @@ const getIconOfProcesses = async (e, forced = false) => {
     isGettingIconOfProcesses = false
 }
 
+/**
+ * get customized data
+ * @returns {Promise<Object>} Promise with customized data
+ */
 const getCustomizedData = () => require(path.resolve(app.getPath('userData'), 'userData/customizedData.json'))
 
-const saveCustomizedData = newData =>
+/**
+ * save customized data
+ * @param {Object} newData 
+ * @returns void
+ */
+const saveCustomizedData = (e, newData) =>
     fs.writeFileSync(
         path.resolve(app.getPath('userData'), 'userData/customizedData.json'),
         JSON.stringify(newData),

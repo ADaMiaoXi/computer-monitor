@@ -16,6 +16,7 @@ const generateRAMListHtmlSnippet = (ramTaskList, {freeMemory, totalMemory}) => `
             <div id="monitor_dashboard_ram_free">Free: ${(Number(freeMemory.split(' ')[0])/1024).toFixed(2)} GB</div>
             
         </div>
+        <div id="monitor_dashboard_ram_buffer"></div>
         <div id="monitor_dashboard_ram_pie">
             Pie chart
         </div>

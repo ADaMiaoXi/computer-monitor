@@ -28,7 +28,7 @@ const createApplication = () => {
             const [x, y] = win.getPosition()
             customizedData.position.x = x
             customizedData.position.y = y
-            saveCustomizedData(customizedData)
+            saveCustomizedData(undefined, customizedData)
         },
         1500,
         {leading: false}

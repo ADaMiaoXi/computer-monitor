@@ -81,10 +81,46 @@ const RAM_USAGE_SNIPPET = `
     <div class="monitor_summary_data_value usage">**.** %</div>
 </div>`
 
+const RAM_FREE_SNIPPET = `
+<div
+    id="monitor_summary_ramfree"
+    class="monitor_summary_item monitor_summary_ramfree_item"
+    data-parentId="monitor_summary_ram_section"
+    data-path="memory.freeMemory"
+>
+    <div class="monitor_summary_data_label">Free:</div>
+    <div class="monitor_summary_data_value free"> - </div>
+</div>`
+
+const RAM_USED_SNIPPET = `
+<div
+    id="monitor_summary_ramused"
+    class="monitor_summary_item monitor_summary_ramused_item"
+    data-parentId="monitor_summary_ram_section"
+    data-path="memory.usedMemory"
+>
+    <div class="monitor_summary_data_label">Used:</div>
+    <div class="monitor_summary_data_value"> - </div>
+</div>`
+
+const RAM_TOTAL_SNIPPET = `
+<div
+    id="monitor_summary_ramtotal"
+    class="monitor_summary_item monitor_summary_ramtotal_item"
+    data-parentId="monitor_summary_ram_section"
+    data-path="memory.totalMemory"
+>
+    <div class="monitor_summary_data_label">Total:</div>
+    <div class="monitor_summary_data_value"> - </div>
+</div>`
+
 module.exports = {
     DOWNLOAD_SPEED_HTML_SNIPPET,
     UPLOAD_SPEED_HTML_SNIPPET,
     GPU_USAGE_SNIPPET,
     CPU_USAGE_SNIPPET,
-    RAM_USAGE_SNIPPET
+    RAM_USAGE_SNIPPET,
+    RAM_FREE_SNIPPET,
+    RAM_USED_SNIPPET,
+    RAM_TOTAL_SNIPPET
 }

@@ -45,3 +45,15 @@
 .monitor_summary_ramusage_item .usage {
     width: 50px;
 }
+
+.monitor_summary_ramfree_item .monitor_summary_data_value {
+    width: 80px;
+}
+
+.monitor_summary_ramused_item .monitor_summary_data_value{
+    width: 80px;
+}
+
+.monitor_summary_ramtotal_item .monitor_summary_data_value{
+    width: 80px;
+}

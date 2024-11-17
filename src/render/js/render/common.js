@@ -46,7 +46,7 @@ export const resizeWindow = async (paramWidth, paramHeight) => {
     for (let i = 0; i < summaryEelement.children.length; i++) {
         width += summaryEelement.children[i].clientWidth
     }
-
+    
     if (paramWidth && paramHeight) {
         return await window.electronAPI.invoke('resizeWindow', {
             width,

@@ -1,4 +1,6 @@
 import {getCustomizedData} from '../index.js'
+import {insertSummaryItem} from '../summary.js'
+import {electronStore, resizeWindow} from '../common.js'
 
 // Dashboard data fetching interval
 let interval
@@ -21,7 +23,7 @@ export const openDashboard = async (displayContents, currentDashboardId) => {
         launchConfiguration: {
             ramDashboard: {isKeepRefreshing, refreshInterval}
         }
-    } = await getCustomizedData()
+    } = electronStore.get("customizedData")
 
     await displayContents(dashboard)
     if (isKeepRefreshing) {
@@ -50,4 +52,28 @@ const closeOtherDashoard = currentDashboardId => {
     if (openedDashboardId && openedDashboardId !== currentDashboardId) {
         closeDashboard()
     }
+}
+
+export const addOrRemoveMonitorSummaryItem = async itemId => {
+    const customizedData = electronStore.get('customizedData')
+    if (customizedData.summaryItemRecord[itemId]) {
+        console.log('有了，要删!')
+        delete customizedData.summaryItemRecord[itemId]
+        window.electronAPI.invoke('saveCustomizedData', customizedData)
+        electronStore.set('customizedData', customizedData)
+        document.querySelector(`#${itemId}`).remove()
+    } else {
+        const snippetsName = await window.electronAPI.invoke('getHTMLSnippetsNameById', itemId)
+        customizedData.summaryItemRecord[itemId] = snippetsName
+        electronStore.set('customizedData', customizedData)
+        window.electronAPI.invoke('saveCustomizedData', customizedData)
+        await insertSummaryItem(snippetsName)
+    }
+
+    //Resize window size, set timeout to wait documents prepared.
+    await new Promise(resolve => {
+        setTimeout(async () => {
+            resolve(resizeWindow())
+        }, 500)
+    })
 }

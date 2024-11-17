@@ -5,17 +5,20 @@ import {insertHTMLSnippets, getDynamicInfo, getValue, electronStore} from './ind
  * @param {Object} summaryItemRecord
  * @param {Object} staticInfo
  */
-export const fillMonitorSummary = async (summaryItemRecord, staticInfo) => {
+export const fillMonitorSummary = async staticInfo => {
+    const {summaryItemRecord} = electronStore.get('customizedData')
     const dynamicInfo = await getDynamicInfo(staticInfo)
 
     electronStore.set('monitorInfo', dynamicInfo)
 
     const ids = Object.keys(summaryItemRecord)
     for (let id of ids) {
-        const path = document.getElementById(id).dataset.path
-        const value = getValue(dynamicInfo, path)
-        const dataContainer = document.querySelector(`#${id} .monitor_summary_data_value`)
-        dataContainer.innerText = value
+        if (document.getElementById(id)) {
+            const path = document.getElementById(id)?.dataset.path
+            const value = getValue(dynamicInfo, path)
+            const dataContainer = document.querySelector(`#${id} .monitor_summary_data_value`)
+            dataContainer.innerText = value
+        }
     }
 }
 
@@ -24,7 +27,7 @@ export const fillMonitorSummary = async (summaryItemRecord, staticInfo) => {
  * @param {Object} summaryItemRecord
  */
 export const initMonitorSummary = async () => {
-    const summaryItemRecord = electronStore.get('summaryItemRecord')
+    const {summaryItemRecord} = electronStore.get('customizedData')
     const keys = Object.keys(summaryItemRecord)
     const initializedSections = []
     for (let key of keys) {
@@ -37,4 +40,16 @@ export const initMonitorSummary = async () => {
         }
         insertHTMLSnippets(`#${parentId}`, summaryItemRecord[key])
     }
+}
+
+/**
+ * insert monitor summary Item by snippetsName
+ * @param {*} snippetsName
+ */
+export const insertSummaryItem = async snippetsName => {
+    const html = await window.electronAPI.invoke('getHTMLSnippets', snippetsName)
+    const div = document.createElement('div')
+    div.innerHTML = html
+    const parentId = div.firstElementChild.dataset.parentid
+    insertHTMLSnippets(`#${parentId}`, snippetsName)
 }

@@ -1,4 +1,5 @@
-import {getIconOfProcesses, openDashboard, electronStore} from '../index.js'
+import {getIconOfProcesses, openDashboard, electronStore, addOrRemoveMonitorSummaryItem} from '../index.js'
+import {getCustomizedData} from '../common.js'
 
 /**
  * Open RAM Dashboard
@@ -126,29 +127,14 @@ const insertPieChart = ({freeMemory, totalMemory, taskRamItems}) => {
  */
 const enableRamSummaryEvents = () => {
     document.querySelector('#monitor_dashboard_ram_total').addEventListener('click', async e => {
-        console.log(e.target.classList)
-        if (e.target.classList.contains('selected_item')) {
-            e.target.classList.remove('selected_item')
-        } else {
-            e.target.classList.add('selected_item')
-        }
+        addOrRemoveMonitorSummaryItem('monitor_summary_ramtotal')
     })
 
     document.querySelector('#monitor_dashboard_ram_used').addEventListener('click', async e => {
-        console.log(e.target.classList)
-        if (e.target.classList.contains('selected_item')) {
-            e.target.classList.remove('selected_item')
-        } else {
-            e.target.classList.add('selected_item')
-        }
+        addOrRemoveMonitorSummaryItem('monitor_summary_ramused')
     })
 
     document.querySelector('#monitor_dashboard_ram_free').addEventListener('click', async e => {
-        console.log(e.target.classList)
-        if (e.target.classList.contains('selected_item')) {
-            e.target.classList.remove('selected_item')
-        } else {
-            e.target.classList.add('selected_item')
-        }
+        addOrRemoveMonitorSummaryItem('monitor_summary_ramfree')
     })
 }
