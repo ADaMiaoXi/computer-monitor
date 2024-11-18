@@ -74,6 +74,6 @@ export const addOrRemoveMonitorSummaryItem = async itemId => {
     await new Promise(resolve => {
         setTimeout(async () => {
             resolve(resizeWindow())
-        }, 500)
+        }, 10)
     })
 }
