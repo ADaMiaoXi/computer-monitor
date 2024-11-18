@@ -91,9 +91,41 @@ function getCPUCurrentSpeed(lines, CPUMaxClockSpeed) {
     return `${(((lines[processorPerformanceIndex] / 100) * CPUMaxClockSpeed) / 1000).toFixed(2)}  GHz`
 }
 
+function getProcessedCPUTasksList(lines) {
+    const map = new Map()
+    lines
+        .slice(1)
+        .map(line => {
+            return line
+                .split('  ')
+                .filter(Boolean)
+                .map(line => line.trim().replace(/#.*$/, ''))
+        })
+        .forEach(porcessArr => {
+            const key = porcessArr[0]
+            const value = Number(porcessArr[1])
+            if (map.has(key)) {
+                map.set(key, map.get(key) + value)
+            } else {
+                map.set(key, value)
+            }
+        })
+    const sortedKeys = Array.from(map.keys()).sort((a, b) => map.get(b) - map.get(a))
+    const resList = []
+    sortedKeys.forEach((key, index) => {
+        resList[index] = []
+        resList[index][0] = key
+        resList[index][1] = map.get(key)
+    })
+    const totalTime = resList.find(item => item[0] === '_Total')[1]
+    return resList.slice(0, 17).filter(item => (item[0] !== 'Idle' && item[0] !== '_Total')).map(item => [item[0], `${((item[1] / totalTime)*100).toFixed(2)}%`])
+     
+}
+
 module.exports = {
     getCPUModel,
     getCPUUsage,
     getCPUMaxClockSpeed,
-    getCPUCurrentSpeed
+    getCPUCurrentSpeed,
+    getProcessedCPUTasksList
 }

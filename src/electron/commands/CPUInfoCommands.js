@@ -4,5 +4,6 @@ const CPU_PROCESSOR_TIME_COMMAND = `wmic path win32_perfformatteddata_perfproc_p
 
 module.exports = {
     CPU_MAX_SPPED_COMMAND,
-    CPU_USEAGE_PERCENTAGE_COMMAND
+    CPU_USEAGE_PERCENTAGE_COMMAND,
+    CPU_PROCESSOR_TIME_COMMAND
 }

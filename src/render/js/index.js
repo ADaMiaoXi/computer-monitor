@@ -19,7 +19,7 @@ async function render() {
     const customizedData = await getCustomizedData()
     // Initialize electron store.
     electronStore.initialize()
-    electronStore.set('userDataPath', getUserDataPath())
+    electronStore.set('userDataPath', await getUserDataPath())
     electronStore.set("customizedData", customizedData)
     // Initialize monitor summary.
     await initMonitorSummary()

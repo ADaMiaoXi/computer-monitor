@@ -3,6 +3,7 @@
     "launchConfiguration": {
         "cpuSamplingDuration": 1100,
         "summary": {"isKeepRefreshing": true, "refreshInterval": 1200},
+        "cpuDashboard": {"isKeepRefreshing": true, "refreshInterval": 2500},
         "ramDashboard": {"isKeepRefreshing": true, "refreshInterval": 2500}
     },
     "summaryItemRecord": {

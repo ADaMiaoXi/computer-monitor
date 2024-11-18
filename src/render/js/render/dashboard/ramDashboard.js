@@ -1,13 +1,16 @@
-import {getIconOfProcesses, openDashboard, electronStore, addOrRemoveMonitorSummaryItem} from '../index.js'
-import {getCustomizedData} from '../common.js'
+import {openDashboard, electronStore, addOrRemoveMonitorSummaryItem} from '../index.js'
 
 /**
  * Open RAM Dashboard
  * Click event callback of RAM section on monitor summary view
  */
 export const openRAMDashboard = async () => {
-    getIconOfProcesses()
-    openDashboard(displayRAMDashboard, 'monitor_dashboard_ram')
+    const {
+        launchConfiguration: {
+            ramDashboard: {isKeepRefreshing, refreshInterval}
+        }
+    } = electronStore.get('customizedData')
+    openDashboard(displayRAMDashboard, 'monitor_dashboard_ram', refreshInterval, isKeepRefreshing)
 }
 
 const displayRAMDashboard = async dashboard => {
@@ -25,7 +28,7 @@ const displayRAMDashboard = async dashboard => {
     const taskRamList = div.firstElementChild.children[1].children
     const taskRamItems = []
 
-    const userDataPath = await electronStore.get('userDataPath')
+    const userDataPath = electronStore.get('userDataPath')
 
     for (let i = 0; i < taskRamList.length; i++) {
         const taskRamItem = taskRamList[i]

@@ -5,16 +5,22 @@ import {
     openCPUDashboard,
     openRAMDashboard,
     closeDashboard,
-    getCustomizedData
+    getIconOfProcesses
 } from './index.js'
 
 /**
  * Enable events invokers
  */
 export const enableSummaryEvents = () => {
-    document.querySelector('#monitor_summary_cpu_section').addEventListener('click', openCPUDashboard)
+    document.querySelector('#monitor_summary_cpu_section').addEventListener('click', () => {
+        getIconOfProcesses(true)
+        openCPUDashboard()
+    })
 
-    document.querySelector('#monitor_summary_ram_section').addEventListener('click', openRAMDashboard)
+    document.querySelector('#monitor_summary_ram_section').addEventListener('click', () => {
+        getIconOfProcesses(true)
+        openRAMDashboard()
+    })
 }
 
 /**
@@ -53,7 +59,7 @@ export async function run() {
         launchConfiguration: {
             summary: {refreshInterval, isKeepRefreshing}
         }
-    } = await electronStore.get("customizedData")
+    } = await electronStore.get('customizedData')
 
     await fillMonitorSummary(staticInfo)
     if (isKeepRefreshing) {
