@@ -79,7 +79,7 @@ const initializeElectronApis = () => {
 const initializeUserData = () => {
     const userDataPath = path.resolve(app.getPath('userData'), 'userData')
     if (!fs.existsSync(userDataPath)) {
-        const customizedData = require(path.resolve(__dirname, '../configTemplate/customizedData.json'))
+        const customizedData = require(path.resolve(__dirname, '../defaultConfig/customizedData.json'))
         fs.mkdirSync(userDataPath)
         fs.writeFileSync(path.resolve(userDataPath, 'customizedData.json'), JSON.stringify(customizedData), 'utf8')
     }

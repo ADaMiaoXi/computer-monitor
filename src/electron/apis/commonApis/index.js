@@ -101,7 +101,7 @@ const getIconOfProcesses = async (e, forced = false) => {
     if (!fs.existsSync(targetFloder)) {
         fs.mkdirSync(targetFloder)
         fs.cpSync(
-            path.resolve(__dirname, '../../../configTemplate/defaultIcon.png'),
+            path.resolve(__dirname, '../../../defaultConfig/defaultIcon.png'),
             path.resolve(targetFloder, 'defaultIcon.png')
         )
     }
