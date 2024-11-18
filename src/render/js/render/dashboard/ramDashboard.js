@@ -83,7 +83,8 @@ const insertPieChart = ({freeMemory, totalMemory, taskRamItems}) => {
         taskRamItems[2].value -
         taskRamItems[3].value -
         taskRamItems[4].value -
-        taskRamItems[5].value
+        taskRamItems[5].value - 
+        taskRamItems[6].value
     const chartDom = document.getElementById('monitor_dashboard_ram_pie')
     const myChart = echarts.init(chartDom)
 
@@ -113,7 +114,8 @@ const insertPieChart = ({freeMemory, totalMemory, taskRamItems}) => {
                     {value: taskRamItems[2].value, name: taskRamItems[2].name},
                     {value: taskRamItems[3].value, name: taskRamItems[3].name},
                     {value: taskRamItems[4].value, name: taskRamItems[4].name},
-                    {value: taskRamItems[5].value, name: taskRamItems[5].name}
+                    {value: taskRamItems[5].value, name: taskRamItems[5].name},
+                    {value: taskRamItems[6].value, name: taskRamItems[6].name}
                 ]
             }
         ]
