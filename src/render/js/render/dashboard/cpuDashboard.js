@@ -12,7 +12,7 @@ export const openCPUDashboard = async () => {
     openDashboard(displayCPUDashboard, 'monitor_dashboard_cpu', refreshInterval, isKeepRefreshing)
 }
 
-const displayCPUDashboard = async dashboard => {
+const displayCPUDashboard = async (dashboard, currentDashboardId) => {
     const userDataPath = electronStore.get('userDataPath')
     const div = document.createElement('div')
     const cpuDashboardHtmlSnippet = await window.electronAPI.invoke('getCPUDashboardHtml')
@@ -36,6 +36,8 @@ const displayCPUDashboard = async dashboard => {
         })
     }
 
+    const openedDashboardId = document.querySelector('#monitor_dashboard').firstElementChild?.id
+    if (openedDashboardId !== currentDashboardId) return
     if (dashboard.firstElementChild) {
         dashboard.replaceChild(div.firstElementChild, dashboard.firstElementChild)
     } else {

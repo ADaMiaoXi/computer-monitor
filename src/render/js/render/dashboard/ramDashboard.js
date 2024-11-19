@@ -13,7 +13,7 @@ export const openRAMDashboard = async () => {
     openDashboard(displayRAMDashboard, 'monitor_dashboard_ram', refreshInterval, isKeepRefreshing)
 }
 
-const displayRAMDashboard = async dashboard => {
+const displayRAMDashboard = async (dashboard, currentDashboardId) => {
     const {
         memory: {freeMemory, totalMemory}
     } = window.electronStore.get('monitorInfo')
@@ -58,7 +58,9 @@ const displayRAMDashboard = async dashboard => {
             value: Number(taskRamItem.children[2].innerText?.split(' ')[0])
         })
     }
-
+    
+    const openedDashboardId = document.querySelector('#monitor_dashboard').firstElementChild?.id
+    if (openedDashboardId !== currentDashboardId) return
     if (dashboard.firstElementChild) {
         dashboard.replaceChild(div.firstElementChild, dashboard.firstElementChild)
     } else {

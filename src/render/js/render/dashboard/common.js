@@ -1,4 +1,3 @@
-import {getCustomizedData} from '../index.js'
 import {insertSummaryItem} from '../summary.js'
 import {electronStore, resizeWindow} from '../common.js'
 
@@ -23,7 +22,7 @@ export const openDashboard = async (displayContents, currentDashboardId, refresh
     if (isKeepRefreshing) {
         clearInterval(interval)
         interval = setInterval(async () => {
-            displayContents(dashboard)
+            displayContents(dashboard, currentDashboardId)
         }, refreshInterval)
     }
 }
