@@ -3,11 +3,12 @@ const path = require('path')
 
 const generateCPUListHtmlSnippet = cpuTaskList => `
 <div class="monitor_dashboard_cpu" id="monitor_dashboard_cpu">
-    <div class="monitor_dashboard_title dragable">CPU memory usage</div>
+    <div class="monitor_dashboard_title dragable">CPU Utilization</div>
     <div id="monitor_dashboard_cpu_list">${generateCPUListItemsHtmlSnippet(cpuTaskList)}
     </div>
     <div id="monitor_dashboard_cpu_detail">
-        
+        <div id="monitor_dashboard_cpu_speed_clickable_block"></div>
+        <div id="monitor_dashboard_cpu_usage_record"></id>
     <div>
 </div>
 `

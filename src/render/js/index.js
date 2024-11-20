@@ -21,6 +21,7 @@ async function render() {
     electronStore.initialize()
     electronStore.set('userDataPath', await getUserDataPath())
     electronStore.set("customizedData", customizedData)
+    electronStore.set("cpuUsageRecords", [])
     // Initialize monitor summary.
     await initMonitorSummary()
     // Resize window size, set timeout to wait documents prepared.

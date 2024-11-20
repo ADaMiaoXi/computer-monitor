@@ -55,8 +55,8 @@ const GPU_USAGE_SNIPPET = `
     data-path="gpu.GPUUsage"
 >
     
-    <div class="monitor_summary_data_label">Usage:</div>
-    <div class="monitor_summary_data_value usage">*** %</div>
+    <div class="monitor_summary_data_label">Utilization:</div>
+    <div class="monitor_summary_data_value usage">** %</div>
 </div>`
 
 const CPU_USAGE_SNIPPET = `
@@ -66,8 +66,19 @@ const CPU_USAGE_SNIPPET = `
     data-parentId="monitor_summary_cpu_section"
     data-path="cpu.CPUUsage"
 >
-    <div class="monitor_summary_data_label">Usage:</div>
+    <div class="monitor_summary_data_label">Utilization:</div>
     <div class="monitor_summary_data_value usage">**.** %</div>
+</div>`
+
+const CPU_CURRENT_SPEED_SNIPPET = `
+<div
+    id="monitor_summary_cpucurrentspeed"
+    class="monitor_summary_item monitor_summary_cpucurrentspeed_item"
+    data-parentId="monitor_summary_cpu_section"
+    data-path="cpu.CPUCurrentSpeed"
+>
+    <div class="monitor_summary_data_label">Speed:</div>
+    <div class="monitor_summary_data_value">*.** GHZ</div>
 </div>`
 
 const RAM_USAGE_SNIPPET = `
@@ -77,7 +88,7 @@ const RAM_USAGE_SNIPPET = `
     data-parentId="monitor_summary_ram_section"
     data-path="memory.memoryUsage"
 >
-    <div class="monitor_summary_data_label">Usage:</div>
+    <div class="monitor_summary_data_label">Utilization:</div>
     <div class="monitor_summary_data_value usage">**.** %</div>
 </div>`
 
@@ -119,6 +130,7 @@ module.exports = {
     UPLOAD_SPEED_HTML_SNIPPET,
     GPU_USAGE_SNIPPET,
     CPU_USAGE_SNIPPET,
+    CPU_CURRENT_SPEED_SNIPPET,
     RAM_USAGE_SNIPPET,
     RAM_FREE_SNIPPET,
     RAM_USED_SNIPPET,

@@ -60,7 +60,7 @@ const displayRAMDashboard = async (dashboard, currentDashboardId) => {
     }
     
     const openedDashboardId = document.querySelector('#monitor_dashboard').firstElementChild?.id
-    if (openedDashboardId !== currentDashboardId) return
+    if (openedDashboardId && openedDashboardId !== currentDashboardId) return
     if (dashboard.firstElementChild) {
         dashboard.replaceChild(div.firstElementChild, dashboard.firstElementChild)
     } else {

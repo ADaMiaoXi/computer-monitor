@@ -5,7 +5,7 @@
  */
 const generateRAMListHtmlSnippet = (ramTaskList, {freeMemory, totalMemory}) => `
 <div class="monitor_dashboard_ram" id="monitor_dashboard_ram">
-    <div class="monitor_dashboard_title dragable">RAM memory usage</div>
+    <div class="monitor_dashboard_title dragable">RAM memory utilization</div>
     <div id="monitor_dashboard_ram_list">${generateRAMListItemsHtmlSnippet(ramTaskList)}
     </div>
     <div id="monitor_dashboard_ram_detail">

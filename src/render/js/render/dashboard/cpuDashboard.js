@@ -1,4 +1,4 @@
-import {getIconOfProcesses, openDashboard} from '../index.js'
+import {electronStore, addOrRemoveMonitorSummaryItem, openDashboard} from '../index.js'
 /**
  * Open CPU Dashboard
  * Click event callback of CPU section on monitor summary view
@@ -43,4 +43,69 @@ const displayCPUDashboard = async (dashboard, currentDashboardId) => {
     } else {
         dashboard.appendChild(div.firstElementChild)
     }
+
+    insertCPUUsageRecord()
+
+    enableCPUDetailEvents()
+
+    document.querySelector('.monitor_dashboard_title').innerHTML = electronStore.get('monitorInfo').cpu.CPU
+}
+
+const insertCPUUsageRecord = () => {
+    // Display CPU usage records
+    var chartDom = document.getElementById('monitor_dashboard_cpu_usage_record')
+    var myChart = echarts.init(chartDom)
+    var option = {
+        title: {
+            text: `Current speed: ${electronStore.get('monitorInfo').cpu.CPUCurrentSpeed}`,
+            textStyle: {
+                color: '#fff'
+            }
+        },
+        textStyle: {
+            color: '#fff'
+        },
+        animation: false,
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                animation: false
+            }
+        },
+        xAxis: {
+            type: 'time',
+            splitLine: {
+                show: false
+            }
+        },
+        yAxis: {
+            type: 'value',
+            min: 0,
+            max: 100,
+            boundaryGap: [0, '100%'],
+            splitLine: {
+                show: true,
+                lineStyle: {
+                    color: '#444'
+                }
+            }
+        },
+        series: [
+            {
+                name: 'CPU Utilization: ',
+                type: 'line',
+                showSymbol: false,
+                data: electronStore.get('cpuUsageRecords')
+            }
+        ]
+    }
+
+    option && myChart.setOption(option)
+}
+
+
+const enableCPUDetailEvents = () => {
+    document.querySelector('#monitor_dashboard_cpu_speed_clickable_block').addEventListener('click', async e => {
+        addOrRemoveMonitorSummaryItem('monitor_summary_cpucurrentspeed')
+    })
 }

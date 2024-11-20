@@ -35,11 +35,15 @@
 }
 
 .monitor_summary_gpuusage_item .usage {
-    width: 32px;
+    width: 30px;
 }
 
 .monitor_summary_cpuusage_item .usage {
-    width: 50px;
+    width: 45px;
+}
+
+.monitor_summary_cpucurrentspeed_item .monitor_summary_data_value{
+    width: 53px;
 }
 
 .monitor_summary_ramusage_item .usage {

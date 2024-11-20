@@ -175,8 +175,30 @@
 }
 
 #monitor_dashboard_cpu_detail {
-    display: flex;
+    position: relative;
     margin-top: 0.5rem;
     padding-top: 0.5rem;
+    padding-left: 15px;
     border-top: 1px solid #3d3d3d;
+    height: 200px;
+}
+
+#monitor_dashboard_cpu_usage_record{
+    height: 200px;
+}
+
+#monitor_dashboard_cpu_speed_clickable_block{
+    position: absolute; /* 设置子元素为绝对定位 */
+    top: 8px; /* 距离父容器顶部 50px */
+    left: 15px;
+    width: 235px;
+    height: 25px;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 100;
+}
+
+#monitor_dashboard_cpu_speed_clickable_block:hover {
+    opacity: 1;
+    background: rgba(143, 142, 142, 0.7);
 }

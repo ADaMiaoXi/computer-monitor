@@ -67,6 +67,7 @@ export async function run() {
         summaryDataFetchingIntervals.push(
             setInterval(async () => {
                 await fillMonitorSummary(staticInfo)
+                recordCPUUsage(electronStore.get('monitorInfo').cpu.CPUUsage)
             }, refreshInterval)
         )
     }
@@ -80,4 +81,30 @@ export function stop() {
     setTimeout(() => {
         summaryDataFetchingIntervals.forEach(interval => clearInterval(interval))
     }, 3000)
+}
+
+/**
+ * recordCPUUsage
+ * @param {string} usage
+ */
+export function recordCPUUsage(usage) {
+    if (usage) {
+        usage = Number(usage.replace('%', ''))
+    } else {
+        return
+    }
+    const cpuUsageRecords = electronStore.get('cpuUsageRecords')
+    if (cpuUsageRecords.length >= 60) {
+        cpuUsageRecords.shift()
+        cpuUsageRecords.push({
+            name: new Date().toISOString(),
+            value: [new Date().getTime(), usage]
+        })
+    } else {
+        cpuUsageRecords.push({
+            name: new Date().toISOString(),
+            value: [new Date().getTime(), usage]
+        })
+    }
+    electronStore.set('cpuUsageRecords', cpuUsageRecords)
 }

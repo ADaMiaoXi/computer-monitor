@@ -28,7 +28,7 @@ export const openDashboard = async (
         document.querySelector('#monitor_dashboard').innerHTML = `<h1 id="${currentDashboardId}">Loading...</h1>`
     }
 
-    await displayContents(dashboard)
+    await displayContents(dashboard, currentDashboardId)
     if (isKeepRefreshing) {
         clearInterval(interval)
         interval = setInterval(async () => {
