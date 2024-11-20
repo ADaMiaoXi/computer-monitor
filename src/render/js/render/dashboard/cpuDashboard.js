@@ -9,7 +9,7 @@ export const openCPUDashboard = async () => {
             cpuDashboard: {isKeepRefreshing, refreshInterval}
         }
     } = electronStore.get('customizedData')
-    openDashboard(displayCPUDashboard, 'monitor_dashboard_cpu', refreshInterval, isKeepRefreshing)
+    openDashboard(displayCPUDashboard, 'monitor_dashboard_cpu', refreshInterval, isKeepRefreshing, true)
 }
 
 const displayCPUDashboard = async (dashboard, currentDashboardId) => {

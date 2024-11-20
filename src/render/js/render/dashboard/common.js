@@ -9,13 +9,23 @@ let interval
  * @param {String} dashboardId  The id of the dashboard element to be opened, used to close other dashboard that is displaying
  * @returns
  */
-export const openDashboard = async (displayContents, currentDashboardId, refreshInterval, isKeepRefreshing) => {
+export const openDashboard = async (
+    displayContents,
+    currentDashboardId,
+    refreshInterval,
+    isKeepRefreshing,
+    showIsLoading = false
+) => {
     const dashboard = document.querySelector('#monitor_dashboard')
     closeOtherDashoard(currentDashboardId)
     const isDashboardOpen = dashboard.clientHeight > 25
     if (isDashboardOpen) {
         closeDashboard()
         return
+    }
+
+    if (showIsLoading) {
+        document.querySelector('#monitor_dashboard').innerHTML = `<h1 id="${currentDashboardId}">Loading...</h1>`
     }
 
     await displayContents(dashboard)
@@ -50,7 +60,6 @@ const closeOtherDashoard = currentDashboardId => {
 export const addOrRemoveMonitorSummaryItem = async itemId => {
     const customizedData = electronStore.get('customizedData')
     if (customizedData.summaryItemRecord[itemId]) {
-        console.log('有了，要删!')
         delete customizedData.summaryItemRecord[itemId]
         window.electronAPI.invoke('saveCustomizedData', customizedData)
         electronStore.set('customizedData', customizedData)
