@@ -1,4 +1,4 @@
-import {electronStore, addOrRemoveMonitorSummaryItem, openDashboard} from '../index.js'
+import {addOrRemoveMonitorSummaryItem, openDashboard} from '../index.js'
 /**
  * Open CPU Dashboard
  * Click event callback of CPU section on monitor summary view
@@ -60,7 +60,8 @@ const insertCPUUsageRecord = () => {
             text: `Current speed: ${electronStore.get('monitorInfo').cpu.CPUCurrentSpeed}`,
             textStyle: {
                 color: '#fff'
-            }
+            },
+            left: '20'
         },
         textStyle: {
             color: '#fff'

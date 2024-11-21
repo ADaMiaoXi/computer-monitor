@@ -1,0 +1,82 @@
+.monitor_dashboard_cpu {
+    padding-bottom: 8px;
+}
+
+.monitor_dashboard_cpu_list_item {
+    display: flex;
+    padding: 2px 20px;
+    line-height: 1rem;
+    font-size: 0.75rem;
+    height: 1rem;
+}
+
+.monitor_dashboard_cpu_list_item:hover {
+    background: rgba(120, 120, 120, 0.4);
+}
+
+.monitor_dashboard_cpu_list_item_icon .close-button {
+    padding: 0;
+    width: 30px;
+    color: #ffffff;
+    border: none;
+    font-size: 1rem;
+    display: flex;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.monitor_dashboard_cpu_list_item_icon {
+    display: none;
+    width: 10%;
+}
+
+.monitor_dashboard_cpu_list_item_icon .close-button:hover {
+    color: red;
+    cursor: pointer;
+}
+
+.monitor_dashboard_cpu_list_item:hover > :last-child {
+    display: block;
+}
+
+.monitor_dashboard_cpu_list_item_logo {
+    width: 1rem;
+    height: 1rem;
+}
+
+.monitor_dashboard_cpu_list_item_label {
+    width: 60%;
+    padding-left: 0.5rem;
+    overflow: hidden;
+}
+
+.monitor_dashboard_cpu_list_item_value {
+    width: 25%;
+}
+
+#monitor_dashboard_cpu_detail {
+    position: relative;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid #3d3d3d;
+    height: 200px;
+}
+
+#monitor_dashboard_cpu_usage_record{
+    height: 200px;
+}
+
+#monitor_dashboard_cpu_speed_clickable_block{
+    position: absolute;
+    top: 8px;
+    left: 23px;
+    width: 230px;
+    height: 25px;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 100;
+}
+
+#monitor_dashboard_cpu_speed_clickable_block:hover {
+    opacity: 1;
+    background: rgba(143, 142, 142, 0.7);
+}

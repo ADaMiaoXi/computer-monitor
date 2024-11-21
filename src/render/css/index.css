@@ -1,5 +1,8 @@
 @import './monitorSummary.css';
 @import './monitorDashboard.css';
+@import './monitorCpuDashboard.css';
+@import './monitorRamDashboard.css';
+@import './monitorNetworkDashboard.css';
 
 html,
 body {

@@ -4,6 +4,7 @@ import {
     fillMonitorSummary,
     openCPUDashboard,
     openRAMDashboard,
+    openNetworkDashboard,
     closeDashboard,
     getIconOfProcesses
 } from './index.js'
@@ -20,6 +21,10 @@ export const enableSummaryEvents = () => {
     document.querySelector('#monitor_summary_ram_section').addEventListener('click', () => {
         getIconOfProcesses(true)
         openRAMDashboard()
+    })
+
+    document.querySelector('#monitor_summary_network_section').addEventListener('click', () => {
+        openNetworkDashboard()
     })
 }
 
@@ -107,4 +112,13 @@ export function recordCPUUsage(usage) {
         })
     }
     electronStore.set('cpuUsageRecords', cpuUsageRecords)
+}
+
+/**
+ * recordNetworkUploadSpeed
+ * @param {string} usage
+ */
+export function recordNetworkUploadSpeed(speed) {
+    
+   
 }
