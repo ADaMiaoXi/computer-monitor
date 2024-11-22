@@ -10,7 +10,7 @@ const createApplication = () => {
         x: position.x,
         y: position.y,
         width: 100,
-        height: 600,
+        height: 580,
         frame: false,
         transparent: true,
         resizable: false,

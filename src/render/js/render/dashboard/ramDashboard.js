@@ -114,7 +114,7 @@ const insertPieChart = ({freeMemory, totalMemory, taskRamItems}) => {
             {
                 name: 'RAM Usage',
                 type: 'pie',
-                radius: '75%',
+                radius: '85%',
                 data: [
                     {value: freeMemoryValue, name: 'Free'},
                     {value: otherUsedMemoryValue.toFixed(2), name: 'Others'},
