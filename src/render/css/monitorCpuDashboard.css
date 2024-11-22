@@ -58,17 +58,17 @@
     margin-top: 0.5rem;
     padding-top: 0.5rem;
     border-top: 1px solid #3d3d3d;
-    height: 200px;
+    height: 190px;
 }
 
 #monitor_dashboard_cpu_usage_record{
-    height: 200px;
+    height: 190px;
 }
 
 #monitor_dashboard_cpu_speed_clickable_block{
     position: absolute;
     top: 8px;
-    left: 23px;
+    left: 19px;
     width: 230px;
     height: 25px;
     opacity: 0;

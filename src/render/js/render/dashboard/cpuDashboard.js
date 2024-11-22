@@ -61,16 +61,26 @@ const insertCPUUsageRecord = () => {
             textStyle: {
                 color: '#fff'
             },
-            left: '20'
+            left: '16'
         },
         textStyle: {
             color: '#fff'
         },
         animation: false,
+        grid:{
+            top: 65,
+            bottom: 23,
+            left: 63
+        },
         tooltip: {
             trigger: 'axis',
             axisPointer: {
                 animation: false
+            },
+            formatter: function (params) {
+                const param = params[0]
+                var date = new Date(param.name)
+                return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} - ${param.value[1]} %`
             }
         },
         xAxis: {
@@ -81,6 +91,7 @@ const insertCPUUsageRecord = () => {
         },
         yAxis: {
             type: 'value',
+            name: 'Utillization (%)',
             min: 0,
             max: 100,
             boundaryGap: [0, '100%'],

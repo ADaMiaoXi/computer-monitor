@@ -1,77 +1,46 @@
 var chartDom = document.getElementById('main');
 var myChart = echarts.init(chartDom);
-var option;
-
-// 模拟 CPU 使用率数据
-function getCPUUsage() {
-    return Math.floor(Math.random() * 101); // 生成 0-100 的随机数
-}
 
 let data = [];
+let times = [];
 
-// 初始化数据
-for (let i = 0; i < 100; i++) {
-    data.push({
-        name: new Date().toISOString(),
-        value: [new Date().getTime() + i, getCPUUsage()]
-    });
+for (let i = 0; i < 60; i++) {
+    const time = new Date(Date.now() - (59 - i) * 1000).toLocaleString();
+    const speed = Math.floor(Math.random() * 100); // 模拟网速数据
+    times.push(time);
+    data.push(speed);
 }
 
-option = {
+// 设置 ECharts 配置
+const option = {
     title: {
-        text: 'CPU 使用率'
+        text: '网络速度监控'
     },
-    animation:false,
     tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-            animation: false
-        }
+        trigger: 'axis'
     },
     xAxis: {
-        type: 'time',
-        splitLine: {
-            show: true
+        type: 'category',
+        data: times,
+        axisLabel: {
+            formatter: function (value) {
+                return value.split(' ')[1]; // 只显示时分秒
+            }
         }
     },
     yAxis: {
         type: 'value',
-        min: 0,
-        max: 100,
-        boundaryGap: [0, '100%'],
-        splitLine: {
-            show: true
-        }
+        name: '下载网速 (kB/s)',
+        min: 0
     },
     series: [
         {
-            name: 'CPU 使用率',
+            name: '下载网速',
             type: 'line',
-            showSymbol: false,
             data: data
         }
     ]
 };
 
-option && myChart.setOption(option);
-
-// 动态更新数据
-// setInterval(() => {
-//     // 添加新的数据点
-//     data.push({
-//         name: new Date().toISOString(),
-//         value: [new Date().getTime(), getCPUUsage()]
-//     });
-
-//     // 保留最近 20 个数据点
-//     if (data.length > 20) {
-//         data.shift();
-//     }
-
-//     // 更新图表
-//     myChart.setOption({
-//         series: [{
-//             data: data
-//         }]
-//     });
-// }, 1000);
+// 渲染图表
+myChart.setOption(option);
