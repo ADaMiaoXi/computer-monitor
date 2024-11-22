@@ -73,6 +73,8 @@ export async function run() {
             setInterval(async () => {
                 await fillMonitorSummary(staticInfo)
                 recordCPUUsage(electronStore.get('monitorInfo').cpu.CPUUsage)
+                recordNetworkUploadSpeed(electronStore.get('monitorInfo').network.uploadSpeedByBytes)
+                recordNetworkDownloadSpeed(electronStore.get('monitorInfo').network.downloadSpeedByBytes)
             }, refreshInterval)
         )
     }
@@ -118,7 +120,51 @@ export function recordCPUUsage(usage) {
  * recordNetworkUploadSpeed
  * @param {string} usage
  */
-export function recordNetworkUploadSpeed(speed) {
-    
-   
+function recordNetworkUploadSpeed(speed) {
+    if (speed) {
+        speed = (Number(speed)/1024).toFixed(2)
+    } else {
+        return
+    }
+    const networkUploadSpeedRecords = electronStore.get('networkUploadSpeedRecords')
+    if (networkUploadSpeedRecords.length >= 60) {
+        networkUploadSpeedRecords.shift()
+        networkUploadSpeedRecords.push({
+            name: new Date().toISOString(),
+            value: [new Date().getTime(), speed]
+        })
+    } else {
+        networkUploadSpeedRecords.push({
+            name: new Date().toISOString(),
+            value: [new Date().getTime(), speed]
+        })
+    }
+    electronStore.set('networkUploadSpeedRecords', networkUploadSpeedRecords)
+}
+
+
+/**
+ * recordNetworkUploadSpeed
+ * @param {string} usage
+ */
+function recordNetworkDownloadSpeed(speed) {
+    if (speed) {
+        speed = (Number(speed)/1024).toFixed(2)
+    } else {
+        return
+    }
+    const networkDownloadSpeedRecords = electronStore.get('networkDownloadSpeedRecords')
+    if (networkDownloadSpeedRecords.length >= 60) {
+        networkDownloadSpeedRecords.shift()
+        networkDownloadSpeedRecords.push({
+            name: new Date().toISOString(),
+            value: [new Date().getTime(), speed]
+        })
+    } else {
+        networkDownloadSpeedRecords.push({
+            name: new Date().toISOString(),
+            value: [new Date().getTime(), speed]
+        })
+    }
+    electronStore.set('networkDownloadSpeedRecords', networkDownloadSpeedRecords)
 }

@@ -65,8 +65,10 @@ const getDynamicInfo = async (e, {CPUModel, CPUMaxClockSpeed, networkName, total
 
     const CPUCurrentSpeed = getCPUCurrentSpeed(lines, CPUMaxClockSpeed)
 
-    const networkDownloadSpeed = getNetworkDownloadSpeed(lines, networkName)
-    const networkUploadSpeed = getNetworkuploadSpeed(lines, networkName)
+    const networkDownloadSpeedByBytes = getNetworkDownloadSpeed(lines, networkName)[0]
+    const networkUploadSpeedByBytes = getNetworkuploadSpeed(lines, networkName)[0]
+    const networkDownloadSpeed = getNetworkDownloadSpeed(lines, networkName)[1]
+    const networkUploadSpeed = getNetworkuploadSpeed(lines, networkName)[1]
 
     const {
         GPUProductName,
@@ -101,7 +103,9 @@ const getDynamicInfo = async (e, {CPUModel, CPUMaxClockSpeed, networkName, total
         network: {
             networkCard: networkName,
             downloadSpeed: networkDownloadSpeed,
-            uploadSpeed: networkUploadSpeed
+            uploadSpeed: networkUploadSpeed,
+            downloadSpeedByBytes:networkDownloadSpeedByBytes,
+            uploadSpeedByBytes:networkUploadSpeedByBytes
         },
         memory: {
             memoryUsage: memoryUsage,

@@ -9,13 +9,11 @@ export const openNetworkDashboard = async () => {
     openDashboard(displayNetworkDashboard, 'monitor_dashboard_network', refreshInterval, isKeepRefreshing)
 }
 
-const displayNetworkDashboard = async (dashboard) => {
+const displayNetworkDashboard = async dashboard => {
     const div = document.createElement('div')
     const ntworkDashboardHtmlSnippet = await window.electronAPI.invoke('getNetworkDashboardHtml')
 
     div.innerHTML = ntworkDashboardHtmlSnippet
-
-    insertNetworkUploadRecord()
 
     if (dashboard.firstElementChild) {
         dashboard.replaceChild(div.firstElementChild, dashboard.firstElementChild)
@@ -23,48 +21,152 @@ const displayNetworkDashboard = async (dashboard) => {
         dashboard.appendChild(div.firstElementChild)
     }
 
-
+    insertNetworkUploadRecord()
+    insertNetworkDownloadRecord()
     document.querySelector('.monitor_dashboard_title').innerHTML = electronStore.get('monitorInfo').network.networkCard
 }
 
 const insertNetworkUploadRecord = () => {
     var chartDom = document.getElementById('monitor_dashboard_upload_record')
-    const chart = echarts.init(chartDom);
-
-    let data = [];
-    let times = [];
-
-     // 设置 ECharts 配置
-     const option = {
+    var myChart = echarts.init(chartDom)
+    var option = {
         title: {
-            text: '网络速度监控'
+            text: `Upload`,
+            textStyle: {
+                color: '#fff',
+                fontSize: 14
+            },
+            top: 5,
+            left: '16'
+        },
+        textStyle: {
+            color: '#fff'
+        },
+        animation: false,
+        grid: {
+            top: 60,
+            bottom: 28,
+            left: 60
         },
         tooltip: {
-            trigger: 'axis'
+            trigger: 'axis',
+            axisPointer: {
+                animation: false
+            },
+            formatter: function (params) {
+                const param = params[0]
+                var date = new Date(param.name)
+                return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} - ${convertNetworkSpeedByKiloBytes(
+                    param.value[1]
+                )}`
+            }
         },
         xAxis: {
-            type: 'category',
-            data: times,
-            axisLabel: {
-                formatter: function (value) {
-                    return value.split(' ')[1]; // 只显示时分秒
-                }
+            type: 'time',
+            splitLine: {
+                show: false
             }
         },
         yAxis: {
             type: 'value',
-            name: '网速 (kB/s)',
-            min: 0
+            name: 'Speed (KB/s)',
+            min: 0,
+            splitLine: {
+                show: true,
+                lineStyle: {
+                    color: '#444'
+                }
+            }
         },
         series: [
             {
-                name: '网速',
+                name: 'Upload speed',
                 type: 'line',
-                data: data
+                lineStyle: {
+                    color: '#E85566'
+                },
+                showSymbol: false,
+                data: electronStore.get('networkUploadSpeedRecords')
             }
         ]
-    };
+    }
 
-    // 渲染图表
-    chart.setOption(option);
+    option && myChart.setOption(option)
+}
+
+const insertNetworkDownloadRecord = () => {
+    var chartDom = document.getElementById('monitor_dashboard_download_record')
+    var myChart = echarts.init(chartDom)
+    var option = {
+        title: {
+            text: `Download`,
+            textStyle: {
+                color: '#fff',
+                fontSize: 14
+            },
+            top: 0,
+            left: '16'
+        },
+        textStyle: {
+            color: '#fff'
+        },
+        animation: false,
+        grid: {
+            top: 55,
+            bottom: 23,
+            left: 60
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                animation: false
+            },
+            formatter: function (params) {
+                const param = params[0]
+                var date = new Date(param.name)
+                return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} - ${convertNetworkSpeedByKiloBytes(
+                    param.value[1]
+                )}`
+            }
+        },
+        xAxis: {
+            type: 'time',
+            splitLine: {
+                show: false
+            }
+        },
+        yAxis: {
+            type: 'value',
+            name: 'Speed (KB/s)',
+            min: 0,
+            splitLine: {
+                show: true,
+                lineStyle: {
+                    color: '#444'
+                }
+            }
+        },
+        series: [
+            {
+                name: 'Download speed',
+                type: 'line',
+                lineStyle: {
+                    color: '#4DBE86'
+                },
+                showSymbol: false,
+                data: electronStore.get('networkDownloadSpeedRecords')
+            }
+        ]
+    }
+
+    option && myChart.setOption(option)
+}
+
+function convertNetworkSpeedByKiloBytes(kiloBytes) {
+    const millionBytes = Number(kiloBytes) / 1024
+    if (millionBytes > 1) {
+        return `${millionBytes.toFixed(2)} MB/s`
+    }
+
+    return `${Number(kiloBytes).toFixed(2)} KB/s`
 }

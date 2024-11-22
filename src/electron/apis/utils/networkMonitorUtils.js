@@ -19,7 +19,7 @@ function getNetworkDownloadSpeed(lines, networkName) {
     console.info(`[Info] Is getting Download Speed...`)
     const receivedIndex =
         lines.findLastIndex(l => l.includes(networkName.trim().toLowerCase().replace('(', '[').replace(')', ']'))) + 1
-    return convertNetworkSpeedByBytes(lines[receivedIndex])
+    return [lines[receivedIndex], convertNetworkSpeedByBytes(lines[receivedIndex])]
 }
 
 /**
@@ -33,7 +33,7 @@ function getNetworkuploadSpeed(lines, networkName) {
 
     const sentIndex =
         lines.findIndex(l => l.includes(networkName.trim().toLowerCase().replace('(', '[').replace(')', ']'))) + 1
-    return convertNetworkSpeedByBytes(lines[sentIndex])
+    return [lines[sentIndex], convertNetworkSpeedByBytes(lines[sentIndex])]
 }
 
 /**
