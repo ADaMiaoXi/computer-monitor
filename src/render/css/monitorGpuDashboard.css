@@ -1,0 +1,32 @@
+#monitor_dashboard_gpu_utilization {
+    height: 200px;
+}
+
+#monitor_dashboard_gpu_video {
+    display: flex;
+}
+
+#monitor_dashboard_gpu_video_decode {
+    width: 50%;
+    height: 150px;
+}
+
+#monitor_dashboard_gpu_video_encode {
+    width: 50%;
+    height: 150px;
+}
+
+#monitor_dashboard_gpu_memory_fan {
+    display: flex;
+}
+
+#monitor_dashboard_gpu_memory_usage {
+    width: 50%;
+    height: 150px;
+
+}
+
+#monitor_dashboard_gpu_fan {
+    width: 50%;
+    height: 150px;
+}

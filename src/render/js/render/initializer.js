@@ -5,6 +5,7 @@ import {
     openCPUDashboard,
     openRAMDashboard,
     openNetworkDashboard,
+    openGPUDashboard,
     closeDashboard,
     getIconOfProcesses
 } from './index.js'
@@ -25,6 +26,10 @@ export const enableSummaryEvents = () => {
 
     document.querySelector('#monitor_summary_network_section').addEventListener('click', () => {
         openNetworkDashboard()
+    })
+
+    document.querySelector('#monitor_summary_gpu_section').addEventListener('click', () => {
+        openGPUDashboard()
     })
 }
 
@@ -75,6 +80,11 @@ export async function run() {
                 recordCPUUsage(electronStore.get('monitorInfo').cpu.CPUUsage)
                 recordNetworkUploadSpeed(electronStore.get('monitorInfo').network.uploadSpeedByBytes)
                 recordNetworkDownloadSpeed(electronStore.get('monitorInfo').network.downloadSpeedByBytes)
+                recordGPUUsage(electronStore.get('monitorInfo').gpu.GPUUsage)
+                recordGPUDecodeUsage(electronStore.get('monitorInfo').gpu.GPUDecoderUsage)
+                recordGPUEncodeUsage(electronStore.get('monitorInfo').gpu.GPUEncoderUsage)
+                recordGPUFanspeedUsage(electronStore.get('monitorInfo').gpu.GPUFanSpeed)
+                recordGPUMemoryUsage(electronStore.get('monitorInfo').gpu.GPUMemoryUsage)
             }, refreshInterval)
         )
     }
@@ -167,4 +177,114 @@ function recordNetworkDownloadSpeed(speed) {
         })
     }
     electronStore.set('networkDownloadSpeedRecords', networkDownloadSpeedRecords)
+}
+
+function recordGPUUsage(usage){
+    if (usage) {
+        usage = Number(usage.replace('%', ''))
+    } else {
+        return
+    }
+    const gpuUsageRecords = electronStore.get('gpuUsageRecords')
+    if (gpuUsageRecords.length >= 60) {
+        gpuUsageRecords.shift()
+        gpuUsageRecords.push({
+            name: new Date().toISOString(),
+            value: [new Date().getTime(), usage]
+        })
+    } else {
+        gpuUsageRecords.push({
+            name: new Date().toISOString(),
+            value: [new Date().getTime(), usage]
+        })
+    }
+    electronStore.set('gpuUsageRecords', gpuUsageRecords)
+}
+
+function recordGPUDecodeUsage(usage){
+    if (usage) {
+        usage = Number(usage.replace('%', ''))
+    } else {
+        return
+    }
+    const gpuDecodeUsageRecords = electronStore.get('gpuDecodeUsageRecords')
+    if (gpuDecodeUsageRecords.length >= 30) {
+        gpuDecodeUsageRecords.shift()
+        gpuDecodeUsageRecords.push({
+            name: new Date().toISOString(),
+            value: [new Date().getTime(), usage]
+        })
+    } else {
+        gpuDecodeUsageRecords.push({
+            name: new Date().toISOString(),
+            value: [new Date().getTime(), usage]
+        })
+    }
+    electronStore.set('gpuDecodeUsageRecords', gpuDecodeUsageRecords)
+}
+
+function recordGPUEncodeUsage(usage){
+    if (usage) {
+        usage = Number(usage.replace('%', ''))
+    } else {
+        return
+    }
+    const gpuEncodeUsageRecords = electronStore.get('gpuEncodeUsageRecords')
+    if (gpuEncodeUsageRecords.length >= 30) {
+        gpuEncodeUsageRecords.shift()
+        gpuEncodeUsageRecords.push({
+            name: new Date().toISOString(),
+            value: [new Date().getTime(), usage]
+        })
+    } else {
+        gpuEncodeUsageRecords.push({
+            name: new Date().toISOString(),
+            value: [new Date().getTime(), usage]
+        })
+    }
+    electronStore.set('gpuEncodeUsageRecords', gpuEncodeUsageRecords)
+}
+
+function recordGPUFanspeedUsage(usage){
+    if (usage) {
+        usage = Number(usage.replace('%', ''))
+    } else {
+        return
+    }
+    const gpuFanSpeedRecords = electronStore.get('gpuFanSpeedRecords')
+    if (gpuFanSpeedRecords.length >= 30) {
+        gpuFanSpeedRecords.shift()
+        gpuFanSpeedRecords.push({
+            name: new Date().toISOString(),
+            value: [new Date().getTime(), usage]
+        })
+    } else {
+        gpuFanSpeedRecords.push({
+            name: new Date().toISOString(),
+            value: [new Date().getTime(), usage]
+        })
+    }
+    electronStore.set('gpuFanSpeedRecords', gpuFanSpeedRecords)
+}
+
+function recordGPUMemoryUsage(usage){
+    if (usage) {
+        usage = Number(usage.replace('%', ''))
+    } else {
+        return
+    }
+    const gpuMemoryUsageRecords = electronStore.get('gpuMemoryUsageRecords')
+    if (gpuMemoryUsageRecords.length >= 30) {
+        gpuMemoryUsageRecords.shift()
+        gpuMemoryUsageRecords.push({
+            name: new Date().toISOString(),
+            value: [new Date().getTime(), usage]
+        })
+    } else {
+        gpuMemoryUsageRecords.push({
+            name: new Date().toISOString(),
+            value: [new Date().getTime(), usage]
+        })
+    }
+    electronStore.set('gpuMemoryUsageRecords', gpuMemoryUsageRecords)
 }

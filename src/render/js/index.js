@@ -24,6 +24,12 @@ async function render() {
     electronStore.set("cpuUsageRecords", [])
     electronStore.set("networkUploadSpeedRecords", [])
     electronStore.set("networkDownloadSpeedRecords", [])
+    electronStore.set("gpuUsageRecords", []),
+    electronStore.set('gpuDecodeUsageRecords', [])
+    electronStore.set('gpuEncodeUsageRecords', [])
+    electronStore.set('gpuFanSpeedRecords', [])
+    electronStore.set('gpuMemoryUsageRecords', [])
+
     // Initialize monitor summary.
     await initMonitorSummary()
     // Resize window size, set timeout to wait documents prepared.
