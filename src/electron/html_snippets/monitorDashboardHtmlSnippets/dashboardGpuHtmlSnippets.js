@@ -11,6 +11,9 @@ const gpuDashboardHtmlSnippet = `
             <div id="monitor_dashboard_gpu_memory_usage"></div>
             <div id="monitor_dashboard_gpu_fan"></div>
         </div>
+        <div>
+            <div id="monitor_dashboard_gpu_temperature"></div>
+        </div>
     </div>
 </div>
 `

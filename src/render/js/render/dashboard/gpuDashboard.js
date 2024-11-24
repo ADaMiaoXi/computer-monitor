@@ -26,6 +26,7 @@ const displayGpuDashboard = async dashboard => {
     insertGPUEncodeUsageRecord()
     insertGPUMemoryUsageRecord()
     insertGPUFanSpeedRecord()
+    insertGPUTemperatureGauge()
 
     document.querySelector('.monitor_dashboard_title').innerHTML = electronStore.get('monitorInfo').gpu.GPU
 }
@@ -344,5 +345,96 @@ const insertGPUFanSpeedRecord = () => {
         ]
     }
 
+    option && myChart.setOption(option)
+}
+
+const getTemporatureColor = () => {
+    const t = Number(electronStore.get('monitorInfo').gpu.GPUTemperature.replace(' C',''))
+    if (t < 50) {
+        return '#6DAB06'
+    } else if (t < 70) {
+        return '#ffce61'
+    } else {
+        return '#dd2222'
+    }
+}
+
+const insertGPUTemperatureGauge = () => {
+    var chartDom = document.getElementById('monitor_dashboard_gpu_temperature')
+    var myChart = echarts.init(chartDom)
+    var option
+
+    option = {
+        animation: false,
+        series: [
+            {
+                type: 'gauge',
+                center: ['50%', '70%'],
+                startAngle: 200,
+                endAngle: -20,
+                min: 0,
+                max: 100,
+                splitNumber: 20,
+                itemStyle: {
+                    color: getTemporatureColor()
+                },
+                progress: {
+                    show: true,
+                    width: 8
+                },
+                pointer: {
+                    show: false
+                },
+                axisLine: {
+                    lineStyle: {
+                        width: 8
+                    }
+                },
+                axisTick: {
+                    distance: -32,
+                    splitNumber: 5,
+                    lineStyle: {
+                        width: 2,
+                        color: '#aaa'
+                    }
+                },
+                splitLine: {
+                    distance: -32,
+                    length: 14,
+                    lineStyle: {
+                        width: 1,
+                        color: '#aaa'
+                    }
+                },
+                axisLabel: {
+                    distance: -20,
+                    color: '#fff',
+                    fontSize: 9
+                },
+                anchor: {
+                    show: false
+                },
+                title: {
+                    show: false
+                },
+                detail: {
+                    valueAnimation: true,
+                    width: '60%',
+                    lineHeight: 25,
+                    borderRadius: 8,
+                    offsetCenter: [0, '-15%'],
+                    fontSize: 18,
+                    fontWeight: 'bolder',
+                    formatter: '{value} °C',
+                    color: 'inherit'
+                },
+                data: [
+                    {
+                        value: Number(electronStore.get('monitorInfo').gpu.GPUTemperature.replace(' C',''))
+                    }
+                ]
+            }
+        ]
+    }
     option && myChart.setOption(option)
 }
