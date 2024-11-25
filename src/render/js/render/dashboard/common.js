@@ -12,8 +12,6 @@ let interval
 export const openDashboard = async (
     displayContents,
     currentDashboardId,
-    refreshInterval,
-    isKeepRefreshing,
     showIsLoading = false
 ) => {
     const dashboard = document.querySelector('#monitor_dashboard')
@@ -29,12 +27,6 @@ export const openDashboard = async (
     }
 
     await displayContents(dashboard, currentDashboardId)
-    if (isKeepRefreshing) {
-        clearInterval(interval)
-        interval = setInterval(async () => {
-            displayContents(dashboard, currentDashboardId)
-        }, refreshInterval)
-    }
 }
 
 /**
