@@ -29,6 +29,7 @@ async function render() {
     electronStore.set('gpuEncodeUsageRecords', [])
     electronStore.set('gpuFanSpeedRecords', [])
     electronStore.set('gpuMemoryUsageRecords', [])
+    electronStore.set('initializedCharts', [])
 
     // Initialize monitor summary.
     await initMonitorSummary()

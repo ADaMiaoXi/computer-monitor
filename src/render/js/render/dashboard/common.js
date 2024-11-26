@@ -28,6 +28,11 @@ export const openDashboard = async (displayContents, currentDashboardId, closeCa
  */
 export const closeDashboard = () => {
     clearInterval(window.dashboardInterval)
+    // destroy charts
+    electronStore.get('initializedCharts').forEach(chart => {
+        chart.dispose();
+    });
+    electronStore.set('initializedCharts',[])
     const dashboard = document.querySelector('#monitor_dashboard')
     dashboard.firstElementChild?.remove()
 }

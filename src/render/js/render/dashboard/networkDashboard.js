@@ -88,6 +88,7 @@ const insertGraphs = () => {
     }
 
     uploadchart.setOption(uploadchartOption)
+    electronStore.get('initializedCharts').push(uploadchart)
 
     //2. insertNetworkDownloadRecord
     const downloadChartDom = document.getElementById('monitor_dashboard_download_record')
@@ -155,6 +156,7 @@ const insertGraphs = () => {
     }
 
     downloadChart.setOption(downloadChartOption)
+    electronStore.get('initializedCharts').push(downloadChart)
 
     // refresh data
     const {
