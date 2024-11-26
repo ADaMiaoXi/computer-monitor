@@ -1,19 +1,13 @@
 import {insertSummaryItem} from '../summary.js'
 import {electronStore, resizeWindow} from '../common.js'
 
-// Dashboard data fetching interval
-let interval
 /**
  * Open dashboard
  * @param {Function} displayContents Render function that renders the dashboard contents
  * @param {String} dashboardId  The id of the dashboard element to be opened, used to close other dashboard that is displaying
  * @returns
  */
-export const openDashboard = async (
-    displayContents,
-    currentDashboardId,
-    showIsLoading = false
-) => {
+export const openDashboard = async (displayContents, currentDashboardId, closeCallback, showIsLoading = false) => {
     const dashboard = document.querySelector('#monitor_dashboard')
     closeOtherDashoard(currentDashboardId)
     const isDashboardOpen = dashboard.clientHeight > 25
@@ -26,14 +20,14 @@ export const openDashboard = async (
         document.querySelector('#monitor_dashboard').innerHTML = `<h1 id="${currentDashboardId}">Loading...</h1>`
     }
 
-    await displayContents(dashboard, currentDashboardId)
+    displayContents(dashboard, currentDashboardId)
 }
 
 /**
  * Close dashboard
  */
 export const closeDashboard = () => {
-    clearInterval(interval)
+    clearInterval(window.dashboardInterval)
     const dashboard = document.querySelector('#monitor_dashboard')
     dashboard.firstElementChild?.remove()
 }

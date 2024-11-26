@@ -1,12 +1,7 @@
 import {openDashboard} from '../index.js'
 
 export const openNetworkDashboard = async () => {
-    const {
-        launchConfiguration: {
-            networkDashboard: {isKeepRefreshing, refreshInterval}
-        }
-    } = electronStore.get('customizedData')
-    openDashboard(displayNetworkDashboard, 'monitor_dashboard_network', refreshInterval, isKeepRefreshing)
+    openDashboard(displayNetworkDashboard, 'monitor_dashboard_network')
 }
 
 const displayNetworkDashboard = async dashboard => {
@@ -21,15 +16,16 @@ const displayNetworkDashboard = async dashboard => {
         dashboard.appendChild(div.firstElementChild)
     }
 
-    insertNetworkUploadRecord()
-    insertNetworkDownloadRecord()
+    insertGraphs()
+
     document.querySelector('.monitor_dashboard_title').innerHTML = electronStore.get('monitorInfo').network.networkCard
 }
 
-const insertNetworkUploadRecord = () => {
-    var chartDom = document.getElementById('monitor_dashboard_upload_record')
-    var myChart = echarts.init(chartDom)
-    var option = {
+const insertGraphs = () => {
+    //1. insertNetworkUploadRecord
+    const uploadchartDom = document.getElementById('monitor_dashboard_upload_record')
+    const uploadchart = echarts.init(uploadchartDom)
+    const uploadchartOption = {
         title: {
             text: `Upload`,
             textStyle: {
@@ -42,7 +38,7 @@ const insertNetworkUploadRecord = () => {
         textStyle: {
             color: '#fff'
         },
-        animation: false,
+        animation: true,
         grid: {
             top: 60,
             bottom: 28,
@@ -51,11 +47,11 @@ const insertNetworkUploadRecord = () => {
         tooltip: {
             trigger: 'axis',
             axisPointer: {
-                animation: false
+                animation: true
             },
             formatter: function (params) {
                 const param = params[0]
-                var date = new Date(param.name)
+                const date = new Date(param.name)
                 return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} - ${convertNetworkSpeedByKiloBytes(
                     param.value[1]
                 )}`
@@ -91,13 +87,12 @@ const insertNetworkUploadRecord = () => {
         ]
     }
 
-    option && myChart.setOption(option)
-}
+    uploadchart.setOption(uploadchartOption)
 
-const insertNetworkDownloadRecord = () => {
-    var chartDom = document.getElementById('monitor_dashboard_download_record')
-    var myChart = echarts.init(chartDom)
-    var option = {
+    //2. insertNetworkDownloadRecord
+    const downloadChartDom = document.getElementById('monitor_dashboard_download_record')
+    const downloadChart = echarts.init(downloadChartDom)
+    const downloadChartOption = {
         title: {
             text: `Download`,
             textStyle: {
@@ -110,7 +105,7 @@ const insertNetworkDownloadRecord = () => {
         textStyle: {
             color: '#fff'
         },
-        animation: false,
+        animation: true,
         grid: {
             top: 55,
             bottom: 23,
@@ -119,11 +114,11 @@ const insertNetworkDownloadRecord = () => {
         tooltip: {
             trigger: 'axis',
             axisPointer: {
-                animation: false
+                animation: true
             },
             formatter: function (params) {
                 const param = params[0]
-                var date = new Date(param.name)
+                const date = new Date(param.name)
                 return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} - ${convertNetworkSpeedByKiloBytes(
                     param.value[1]
                 )}`
@@ -159,7 +154,33 @@ const insertNetworkDownloadRecord = () => {
         ]
     }
 
-    option && myChart.setOption(option)
+    downloadChart.setOption(downloadChartOption)
+
+    // refresh data
+    const {
+        launchConfiguration: {
+            networkDashboard: {isKeepRefreshing, refreshInterval}
+        }
+    } = electronStore.get('customizedData')
+    if (isKeepRefreshing) {
+        window.dashboardInterval = setInterval(() => {
+            console.log('[network] is setting data!')
+            uploadchart.setOption({
+                series: [
+                    {
+                        data: electronStore.get('networkUploadSpeedRecords')
+                    }
+                ]
+            })
+            downloadChart.setOption({
+                series: [
+                    {
+                        data: electronStore.get('networkDownloadSpeedRecords')
+                    }
+                ]
+            })
+        }, refreshInterval)
+    }
 }
 
 function convertNetworkSpeedByKiloBytes(kiloBytes) {
