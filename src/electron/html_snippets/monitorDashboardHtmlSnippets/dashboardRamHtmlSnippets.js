@@ -1,38 +1,18 @@
-/**
- * Generates RAM list
- * @param {Array} ramTaskList
- * @returns {string} RAM list html snippet
- */
-const generateRAMListHtmlSnippet = (ramTaskList, {freeMemory, totalMemory}) => `
-<div class="monitor_dashboard_ram" id="monitor_dashboard_ram">
-    <div class="monitor_dashboard_title dragable">RAM utilization</div>
-    <div id="monitor_dashboard_ram_list">${generateRAMListItemsHtmlSnippet(ramTaskList)}
-    </div>
-    <div id="monitor_dashboard_ram_detail">
-        <div id="monitor_dashboard_ram_summary">
-            <div>Ram summary</div>
-            <div id="monitor_dashboard_ram_total">Total: ${(Number(totalMemory.split(' ')[0])/1024).toFixed(2)} GB</div>
-            <div id="monitor_dashboard_ram_used">Used: ${(((Number(totalMemory.split(' ')[0]) - Number(freeMemory.split(' ')[0]))/1024).toFixed(2))} GB</div>
-            <div id="monitor_dashboard_ram_free">Free: ${(Number(freeMemory.split(' ')[0])/1024).toFixed(2)} GB</div>
-            
-        </div>
-        <div id="monitor_dashboard_ram_buffer"></div>
-        <div id="monitor_dashboard_ram_pie">
-            Pie chart
-        </div>
-        <div>
-    <div>
-</div>
-`
+const fs = require('fs')
+const {app} = require('electron')
+
 /**
  * Generates RAM list items
  * @param {Array} items
  * @returns {string} RAM list items html snippet
  */
 const generateRAMListItemsHtmlSnippet = ramTaskList => {
+    const defaultPath = `${app.getPath('userData')}/userData/processIcons/defaultIcon.png`
     return ramTaskList.reduce((per, cur) => {
+        const imgPath = `${app.getPath('userData')}/userData/processIcons/${cur[0]}.png`
         const html_snippet = `
         <div class="monitor_dashboard_ram_list_item">
+            <img class="monitor_dashboard_ram_list_item_logo" src= "${fs.existsSync(imgPath) ? imgPath : defaultPath}">
             <div class="monitor_dashboard_ram_list_item_label">${cur[0]}</div>
             <div class="monitor_dashboard_ram_list_item_value">${cur[1]}</div>
             <div class="monitor_dashboard_ram_list_item_icon">
@@ -43,6 +23,29 @@ const generateRAMListItemsHtmlSnippet = ramTaskList => {
     }, '')
 }
 
+const getRamHtmlSnippet = () => `
+<div class="monitor_dashboard_ram" id="monitor_dashboard_ram">
+    <div class="monitor_dashboard_title dragable">RAM utilization</div>
+    <div id="monitor_dashboard_ram_list">
+    </div>
+    <div id="monitor_dashboard_ram_detail">
+        <div id="monitor_dashboard_ram_summary">
+            <div>Ram summary</div>
+            <div id="monitor_dashboard_ram_total"></div>
+            <div id="monitor_dashboard_ram_used"></div>
+            <div id="monitor_dashboard_ram_free"></div>
+            
+        </div>
+        <div id="monitor_dashboard_ram_buffer"></div>
+        <div id="monitor_dashboard_ram_pie">
+            Loading...
+        </div>
+        <div>
+    <div>
+</div>
+`
+
 module.exports = {
-    generateRAMListHtmlSnippet
+    getRamHtmlSnippet,
+    generateRAMListItemsHtmlSnippet
 }

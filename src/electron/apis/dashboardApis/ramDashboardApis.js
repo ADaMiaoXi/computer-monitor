@@ -1,4 +1,4 @@
-const {generateRAMListHtmlSnippet} = require('../../html_snippets')
+const {getRamHtmlSnippet, generateRAMListItemsHtmlSnippet} = require('../../html_snippets')
 const {executeCommand, transformStdoutStringToLines, TASK_RAM_USAGE_COMMAND} = require('../../commands')
 
 const {getProcessedRAMTasklist} = require('../utils')
@@ -9,11 +9,12 @@ const getRAMTasklist = async () => {
     return getProcessedRAMTasklist(lines)
 }
 
-const getRAMDashboardHtml = async (e, {freeMemory, totalMemory}) => {
-    const ramTaskList = await getRAMTasklist()
-    return generateRAMListHtmlSnippet(ramTaskList, {freeMemory, totalMemory})
-}
+const getRAMDashboardHtml = getRamHtmlSnippet
+
+const getRAMListItemsHtmlSnippet = (e, ramTaskList) => generateRAMListItemsHtmlSnippet(ramTaskList)
 
 module.exports = {
+    getRAMListItemsHtmlSnippet,
+    getRAMTasklist,
     getRAMDashboardHtml
 }

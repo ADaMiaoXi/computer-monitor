@@ -213,7 +213,6 @@ const insertGraphs = () => {
     gpuVideoEncodeChart.setOption(gpuVideoEncodeChartOption)
     electronStore.get('initializedCharts').push(gpuVideoEncodeChart)
 
-
     //4.insertGPUMemoryUsageRecord
     const gpuMemoryUsageChartDom = document.getElementById('monitor_dashboard_gpu_memory_usage')
     const gpuMemoryUsageChart = echarts.init(gpuMemoryUsageChartDom)
@@ -279,7 +278,6 @@ const insertGraphs = () => {
     gpuMemoryUsageChart.setOption(gpuMemoryUsageChartOption)
     electronStore.get('initializedCharts').push(gpuMemoryUsageChart)
 
-
     //5.insertGPUFanSpeedRecord
     const gpuFanChartDom = document.getElementById('monitor_dashboard_gpu_fan')
     const gpuFanChart = echarts.init(gpuFanChartDom)
@@ -339,7 +337,6 @@ const insertGraphs = () => {
 
     gpuFanChart.setOption(gpuFanChartOption)
     electronStore.get('initializedCharts').push(gpuFanChart)
-
 
     //6.insertGPUTemperatureGauge
     const gpuTemperatureChartDom = document.getElementById('monitor_dashboard_gpu_temperature')
@@ -428,7 +425,6 @@ const insertGraphs = () => {
 
     if (isKeepRefreshing) {
         window.dashboardInterval = setInterval(() => {
-            console.log('is setting data!')
             //1. refresh gpuUtilizationChart
             gpuUtilizationChart.setOption({
                 series: [
@@ -478,7 +474,11 @@ const insertGraphs = () => {
             gpuTemperatureChart.setOption({
                 series: [
                     {
-                        data: Number(electronStore.get('monitorInfo').gpu.GPUTemperature.replace(' C', ''))
+                        data: [
+                            {
+                                value: Number(electronStore.get('monitorInfo').gpu.GPUTemperature.replace(' C', ''))
+                            }
+                        ]
                     }
                 ]
             })

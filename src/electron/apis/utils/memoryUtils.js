@@ -38,10 +38,12 @@ function getProcessedRAMTasklist(lines) {
         const key = lineArr[0]
         const value = Number(lineArr[lineArr.length - 1].replaceAll(',', '').replace(' K', ''))
 
-        if (map.has(key)) {
-            map.set(key, map.get(key) + value)
-        } else {
-            map.set(key, value)
+        if (Boolean(value)) {
+            if (map.has(key)) {
+                map.set(key, map.get(key) + value)
+            } else {
+                map.set(key, value)
+            }
         }
     })
     const sortedKeys = Array.from(map.keys()).sort((a, b) => map.get(b) - map.get(a))
