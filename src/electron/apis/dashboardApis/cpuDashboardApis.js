@@ -1,5 +1,5 @@
-const {generateCPUListHtmlSnippet} = require('../../html_snippets')
-const {executeCommand,transformStdoutStringToLines, CPU_PROCESSOR_TIME_COMMAND} = require('../../commands')
+const {getCPUDashboardHtmlSnippet, generateCPUListHtmlSnippet} = require('../../html_snippets')
+const {executeCommand, transformStdoutStringToLines, CPU_PROCESSOR_TIME_COMMAND} = require('../../commands')
 
 const {getProcessedCPUTasksList} = require('../utils')
 const getCPUTasklist = async () => {
@@ -8,11 +8,12 @@ const getCPUTasklist = async () => {
     return getProcessedCPUTasksList(lines)
 }
 
-const getCPUDashboardHtml = async e => {
-    const cpuTaskList = await getCPUTasklist()
-    return generateCPUListHtmlSnippet(cpuTaskList)
-}
+const getCPUDashboardHtml = getCPUDashboardHtmlSnippet
+
+const getCPUListHtml = (e, cpuTaskList) => generateCPUListHtmlSnippet(cpuTaskList)
 
 module.exports = {
+    getCPUTasklist,
+    getCPUListHtml,
     getCPUDashboardHtml
 }

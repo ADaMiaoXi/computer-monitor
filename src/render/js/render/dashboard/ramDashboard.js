@@ -13,13 +13,10 @@ const displayRAMDashboard = async (dashboard, currentDashboardId) => {
 
     const div = document.createElement('div')
     div.innerHTML = ramDashboardHtmlSnippet
-
     dashboard.appendChild(div.firstElementChild)
 
-    fillRamListAndSummary()
-    setTimeout(() => {
-        insertPieChart()
-    }, 200)
+    await fillRamListAndSummary()
+    insertPieChart()
 
     const {
         launchConfiguration: {
@@ -28,10 +25,8 @@ const displayRAMDashboard = async (dashboard, currentDashboardId) => {
     } = electronStore.get('customizedData')
     if (isKeepRefreshing) {
         window.dashboardInterval = setInterval(async () => {
-            fillRamListAndSummary()
-            setTimeout(() => {
-                updatePieChart()
-            }, 200)
+            await fillRamListAndSummary()
+            updatePieChart()
         }, refreshInterval)
     }
     enableRamSummaryEvents()
@@ -149,9 +144,6 @@ const insertPieChart = () => {
 
 const updatePieChart = () => {
     const pieChat = electronStore.get('initializedCharts')[0]
-    if (!pieChat) {
-        insertPieChart()
-    }
     const {
         memory: {freeMemory, totalMemory}
     } = window.electronStore.get('monitorInfo')

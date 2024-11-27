@@ -7,7 +7,7 @@ import {electronStore, resizeWindow} from '../common.js'
  * @param {String} dashboardId  The id of the dashboard element to be opened, used to close other dashboard that is displaying
  * @returns
  */
-export const openDashboard = async (displayContents, currentDashboardId, closeCallback, showIsLoading = false) => {
+export const openDashboard = async (displayContents, currentDashboardId, showIsLoading = false) => {
     const dashboard = document.querySelector('#monitor_dashboard')
     closeOtherDashoard(currentDashboardId)
     const isDashboardOpen = dashboard.clientHeight > 25

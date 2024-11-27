@@ -4,21 +4,43 @@ import {addOrRemoveMonitorSummaryItem, openDashboard} from '../index.js'
  * Click event callback of CPU section on monitor summary view
  */
 export const openCPUDashboard = async () => {
+    openDashboard(displayCPUDashboard, 'monitor_dashboard_cpu', false)
+}
+
+const displayCPUDashboard = async (dashboard, currentDashboardId) => {
+    //const userDataPath = electronStore.get('userDataPath')
+    const div = document.createElement('div')
+    const cpuDashboardHtmlSnippet = await window.electronAPI.invoke('getCPUDashboardHtml')
+    div.innerHTML = cpuDashboardHtmlSnippet
+
+    dashboard.appendChild(div.firstElementChild)
+
     const {
         launchConfiguration: {
             cpuDashboard: {isKeepRefreshing, refreshInterval}
         }
     } = electronStore.get('customizedData')
-    openDashboard(displayCPUDashboard, 'monitor_dashboard_cpu', refreshInterval, isKeepRefreshing, true)
+
+    insertCPUUsageList()
+    insertCPUUsageRecord()
+
+    if (isKeepRefreshing) {
+        window.dashboardInterval = setInterval(() => {
+            insertCPUUsageList()
+            updateCPUUsageRecord()
+        }, refreshInterval)
+    }
+
+    enableCPUDetailEvents()
+    document.querySelector('.monitor_dashboard_title').innerHTML = electronStore.get('monitorInfo').cpu.CPU
 }
 
-const displayCPUDashboard = async (dashboard, currentDashboardId) => {
-    const userDataPath = electronStore.get('userDataPath')
-    const div = document.createElement('div')
-    const cpuDashboardHtmlSnippet = await window.electronAPI.invoke('getCPUDashboardHtml')
-    div.innerHTML = cpuDashboardHtmlSnippet
+const insertCPUUsageList = async () => {
+    const cpuTaskList = await window.electronAPI.invoke('getCPUTasklist')
+    const cpuListHtml = await window.electronAPI.invoke('getCPUListHtml', cpuTaskList)
+    document.querySelector('#monitor_dashboard_cpu_list').innerHTML = cpuListHtml
 
-    const taskCpuList = div.firstElementChild.children[1].children
+    const taskCpuList = document.querySelector('#monitor_dashboard_cpu_list').children
 
     for (let i = 0; i < taskCpuList.length; i++) {
         const taskCpuItem = taskCpuList[i]
@@ -31,30 +53,17 @@ const displayCPUDashboard = async (dashboard, currentDashboardId) => {
             const imageName = `${e.target.parentElement.parentElement.children[1].innerText}.exe`
             await window.electronAPI.invoke('killTaskByName', imageName)
             setTimeout(() => {
-                displayCPUDashboard(dashboard)
+                insertCPUUsageList()
             }, 200)
+            console.log(imageName)
         })
     }
-
-    const openedDashboardId = document.querySelector('#monitor_dashboard').firstElementChild?.id
-    if (openedDashboardId !== currentDashboardId) return
-    if (dashboard.firstElementChild) {
-        dashboard.replaceChild(div.firstElementChild, dashboard.firstElementChild)
-    } else {
-        dashboard.appendChild(div.firstElementChild)
-    }
-
-    insertCPUUsageRecord()
-
-    enableCPUDetailEvents()
-
-    document.querySelector('.monitor_dashboard_title').innerHTML = electronStore.get('monitorInfo').cpu.CPU
 }
 
 const insertCPUUsageRecord = () => {
     // Display CPU usage records
-    var chartDom = document.getElementById('monitor_dashboard_cpu_usage_record')
-    var myChart = echarts.init(chartDom)
+    var cpuRecordChartDom = document.getElementById('monitor_dashboard_cpu_usage_record')
+    var cpuRecordChart = echarts.init(cpuRecordChartDom)
     var option = {
         title: {
             text: `Current speed: ${electronStore.get('monitorInfo').cpu.CPUCurrentSpeed}`,
@@ -66,8 +75,8 @@ const insertCPUUsageRecord = () => {
         textStyle: {
             color: '#fff'
         },
-        animation: false,
-        grid:{
+        animation: true,
+        grid: {
             top: 65,
             bottom: 23,
             left: 63
@@ -75,7 +84,7 @@ const insertCPUUsageRecord = () => {
         tooltip: {
             trigger: 'axis',
             axisPointer: {
-                animation: false
+                animation: true
             },
             formatter: function (params) {
                 const param = params[0]
@@ -112,9 +121,23 @@ const insertCPUUsageRecord = () => {
         ]
     }
 
-    option && myChart.setOption(option)
+    cpuRecordChart.setOption(option)
+    electronStore.get('initializedCharts').push(cpuRecordChart)
 }
 
+const updateCPUUsageRecord = () => {
+    const cpuRecordChart = electronStore.get('initializedCharts')[0]
+    cpuRecordChart.setOption({
+        title: {
+            text: `Current speed: ${electronStore.get('monitorInfo').cpu.CPUCurrentSpeed}`
+        },
+        series: [
+            {
+                data: electronStore.get('cpuUsageRecords')
+            }
+        ]
+    })
+}
 
 const enableCPUDetailEvents = () => {
     document.querySelector('#monitor_dashboard_cpu_speed_clickable_block').addEventListener('click', async e => {
