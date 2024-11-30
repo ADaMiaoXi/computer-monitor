@@ -427,6 +427,9 @@ const insertGraphs = () => {
         window.dashboardInterval = setInterval(() => {
             //1. refresh gpuUtilizationChart
             gpuUtilizationChart.setOption({
+                title: {
+                    text: `Graphic speed: ${electronStore.get('monitorInfo').gpu.graphicsSpeed}`
+                },
                 series: [
                     {
                         data: electronStore.get('gpuUsageRecords')
@@ -436,6 +439,9 @@ const insertGraphs = () => {
 
             //2.refresh gpuVideoDecodeChart
             gpuVideoDecodeChart.setOption({
+                title: {
+                    text: `Video speed: ${electronStore.get('monitorInfo').gpu.videoSpeed}`
+                },
                 series: [
                     {
                         data: electronStore.get('gpuDecodeUsageRecords')
@@ -454,6 +460,9 @@ const insertGraphs = () => {
 
             //4.refresh gpuMemoryUsageChart
             gpuMemoryUsageChart.setOption({
+                title: {
+                    text: `Memory speed: ${electronStore.get('monitorInfo').gpu.memorySpeed}`
+                },
                 series: [
                     {
                         data: electronStore.get('gpuMemoryUsageRecords')

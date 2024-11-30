@@ -28,7 +28,8 @@ const generateCPUListHtmlSnippet = cpuTaskList => {
 const getCPUDashboardHtmlSnippet = () => `
 <div class="monitor_dashboard_cpu" id="monitor_dashboard_cpu">
     <div class="monitor_dashboard_title dragable">CPU Utilization</div>
-    <div id="monitor_dashboard_cpu_list">Loading...
+    <div id="monitor_dashboard_cpu_list">
+        <span class='monitor_dashboard_loading'>Loading...
     </div>
     <div id="monitor_dashboard_cpu_detail">
         <div id="monitor_dashboard_cpu_speed_clickable_block"></div>

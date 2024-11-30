@@ -80,3 +80,8 @@
     opacity: 1;
     background: rgba(143, 142, 142, 0.7);
 }
+
+.monitor_dashboard_loading {
+   padding-left: 20px;
+   font-size: large;
+}
