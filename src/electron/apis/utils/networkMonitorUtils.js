@@ -17,8 +17,11 @@ const getNetworkName = function (lines) {
  */
 function getNetworkDownloadSpeed(lines, networkName) {
     console.info(`[Info] Is getting Download Speed...`)
-    const receivedIndex =
+    let receivedIndex =
         lines.findLastIndex(l => l.includes(networkName.trim().toLowerCase().replace('(', '[').replace(')', ']'))) + 1
+    while (!Number(lines[receivedIndex])) {
+        receivedIndex++
+    }
     return [lines[receivedIndex], convertNetworkSpeedByBytes(lines[receivedIndex])]
 }
 
